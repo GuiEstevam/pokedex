@@ -7,7 +7,7 @@
 Este projeto foi realizado no intuíto de aprimorar os conhecimentos em Vue.js e Consumo de API
 
 ### Tecnologias utilizadas:
-Html, CSS, Bootstrap, Vue.Js, APIRestful 
+Html, CSS, SASS, Bootstrap, Vue.Js, APIRestful 
     
 ### Como fazer o projeto rodar em outras máquinas?
 #### Windows:
