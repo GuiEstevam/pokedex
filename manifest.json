@@ -1,0 +1,14 @@
+{
+ "name": "Pokédex - Explore o mundo dos Pokémons",
+ "short_name": "Pokédex",
+ "description": "Explore o mundo dos Pokémons com nossa Pokédex interativa",
+ "start_url": "/",
+ "display": "standalone",
+ "background_color": "#F0F4FF",
+ "theme_color": "#00D4FF",
+ "orientation": "portrait-primary",
+ "icons": [],
+ "categories": ["entertainment", "games"],
+ "lang": "pt-BR",
+ "dir": "ltr"
+}

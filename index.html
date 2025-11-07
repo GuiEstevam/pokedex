@@ -1,86 +1,1404 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/theme.css">
-    <!-- <link href="./assets/css/theme-dark.css"> -->
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Pokedex</title>
-</head>
-<body>
-    <header>
-        <!-- <h1>Pokedex</h1> -->
-    </header>
-    <div v-cloak id="app">
-        <section id="search">
-            <input id="name-search" v-model="filter" type="text" placeholder="Search Pokémon">
-            <select id="type-search" v-model="filterType">
-                <option value="">Type</option>
-                <option value="bug">Bug</option>
-                <option value="dark">Dark</option>
-                <option value="dragon">Dragon</option>
-                <option value="electric">Electric</option>
-                <option value="fairy">Fairy</option>
-                <option value="fighting">Fighting</option>
-                <option value="fire">Fire</option>
-                <option value="flying">Flying</option>
-                <option value="ghost">Ghost</option>
-                <option value="grass">Grass</option>
-                <option value="ground">Ground</option>
-                <option value="ice">Ice</option>
-                <option value="normal">Normal</option>
-                <option value="poison">Poison</option>
-                <option value="psychic">Psychic</option>
-                <option value="rock">Rock</option>
-                <option value="steel">Steel</option>
-                <option value="water">Water</option>
-            </select>
-        </section>
-        <section id="content">
-            <div id="pokemons">
-                <!-- Cada pokemon -->
-                <div class="poke-card" v-for="item in filteredList" :style="'background-color: var(--' + item.types[0].type.name + '-type);'" >
-                    <a @click="pokedex(item)">
-                        <img :src="item.sprites.front_default" alt="">
-                        <div class="poke-types">
-                            <p class="poke-label" v-for="type in item.types">
-                                {{type.type.name}}
-                            </p>
-                        </div>
-                        <h5><strong class="name">{{item.name}}</strong></h5>
-                    </a>
-                </div>
-            </div>
-            <div v-show="pokedexOpen" id="pokedex">
-                <button id="poke-close" @click="pokedexOpen=false;">X</button>
-                <img id="poke-image" :src="pokemon.sprites.other['official-artwork'].front_default" alt="">
-                <h1 id="poke-name">{{pokemon.name}}</h1>
-                <h3>Dimensions</h3>
-                <div id="poke-dimensions">
-                    <p>Weight: {{pokemon.weight}}hg</p>
-                    <p>Height: {{pokemon.height}}dm</p>
-                </div>
-                <h3>Stats</h3>
-                <div id="poke-stats">
-                    <div v-for="stat in pokemon.stats" class="stat">
-                        <p class="stat-name">{{stat.stat.name}}</p>
-                        <p>{{stat.base_stat}}</p>
-                    </div>
-                </div>
-                <h3>Abilities</h3>
-                <div id="poke-abilities">
-                    <div v-for="ability in pokemon.abilities">
-                        
-                        <p>{{ability.ability.name}}</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-</body>
+<html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<script src="https://unpkg.com/vue@3"></script>
-<script src="./assets/js/main.js"></script>
+  <!-- SEO Meta Tags -->
+  <meta
+   name="description"
+   content="Explore o mundo dos Pokémons com nossa Pokédex interativa. Busque, filtre e descubra informações detalhadas sobre mais de 150 Pokémon."
+  />
+  <meta
+   name="keywords"
+   content="pokemon, pokedex, pokémon, busca, filtro, tipos, estatísticas"
+  />
+  <meta name="author" content="Pokedex" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pokedex.example.com/" />
+  <meta property="og:title" content="Pokédex - Explore o mundo dos Pokémons" />
+  <meta
+   property="og:description"
+   content="Explore o mundo dos Pokémons com nossa Pokédex interativa. Busque, filtre e descubra informações detalhadas sobre mais de 150 Pokémon."
+  />
+  <meta
+   property="og:image"
+   content="https://pokedex.example.com/assets/images/og-image.jpg"
+  />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://pokedex.example.com/" />
+  <meta name="twitter:title" content="Pokédex - Explore o mundo dos Pokémons" />
+  <meta
+   name="twitter:description"
+   content="Explore o mundo dos Pokémons com nossa Pokédex interativa. Busque, filtre e descubra informações detalhadas sobre mais de 150 Pokémon."
+  />
+  <meta
+   name="twitter:image"
+   content="https://pokedex.example.com/assets/images/twitter-image.jpg"
+  />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+   {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pokédex",
+    "description": "Explore o mundo dos Pokémons com nossa Pokédex interativa",
+    "url": "https://pokedex.example.com",
+    "applicationCategory": "EntertainmentApplication",
+    "operatingSystem": "Web",
+    "offers": {
+     "@type": "Offer",
+     "price": "0",
+     "priceCurrency": "BRL"
+    },
+    "inLanguage": "pt-BR"
+   }
+  </script>
+
+  <link rel="manifest" href="./manifest.json" />
+  <!-- Google Fonts - Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+   href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+   rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./assets/css/app.css" />
+  <script
+   type="module"
+   src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script
+   nomodule
+   src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+  ></script>
+  <title>Pokédex - Explore o mundo dos Pokémons</title>
+ </head>
+ <body>
+  <!-- Skip Links para Acessibilidade -->
+  <a href="#main-content" class="skip-link">Pular para conteúdo principal</a>
+  <a href="#search-section" class="skip-link">Pular para busca</a>
+
+  <div v-cloak id="app">
+   
+    <div class="header-controls">
+     <button
+      id="theme-toggle-btn"
+      class="theme-toggle"
+      @click="toggleTheme"
+      :aria-label="isDarkMode ? 'Alternar para modo claro' : 'Alternar para modo escuro'"
+      :title="isDarkMode ? 'Modo Claro' : 'Modo Escuro'"
+     >
+      <ion-icon :name="isDarkMode ? 'sunny' : 'moon'"></ion-icon>
+     </button>
+    </div>
+    <div class="header-container">
+     <!-- Seção Esquerda: Background -->
+     <div class="header-left-section">
+      <img
+       src="./assets/imgs/logo.png"
+       alt="GUICODEX Logo"
+       class="header-logo"
+      />
+     </div>
+     <!-- Seção Direita: Informações -->
+     <div class="header-right-section">
+      <h1 class="header-title">GUICODEX</h1>
+      <p class="header-subtitle">Explore o mundo dos Pokémons</p>
+      <div class="header-stats">
+       <div class="header-stat-item">
+        <ion-icon name="download" class="header-stat-icon"></ion-icon>
+        <span class="header-stat-value">{{ pokemonList.length }}</span>
+        <span class="header-stat-label">Carregados</span>
+       </div>
+       <div class="header-stat-item">
+        <ion-icon name="location" class="header-stat-icon"></ion-icon>
+        <span class="header-stat-value">{{ currentRegionName }}</span>
+        <span class="header-stat-label">Região</span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </header>
+   <div
+    :class="['layout-shell', layoutShellClasses]"
+   >
+    <aside
+     id="layout-sidebar"
+     class="layout-sidebar"
+     :class="{ 'layout-sidebar--collapsed': !sidebarAberta }"
+     role="complementary"
+     aria-label="Painel de filtros e resumo"
+    >
+     <div class="layout-sidebar-scroll">
+      <div class="layout-sidebar-header-actions" v-if="isDrawerMode">
+       <button
+        type="button"
+        class="sidebar-close-btn"
+        @click="closeSidebar"
+        aria-label="Fechar painel de filtros"
+       >
+        <ion-icon name="close"></ion-icon>
+        <span>Fechar</span>
+       </button>
+      </div>
+      <section
+    id="search-section"
+    class="search-section"
+    role="search"
+    aria-label="Buscar Pokémon"
+   >
+    <div
+     class="search-container"
+     :class="{ 'search-container--filters-active': hasActiveFilters }"
+    >
+     <!-- Header da Seção -->
+     <div class="search-header">
+      <div class="search-header-left">
+       <div class="search-meta">
+        <div class="search-badge">
+         <span v-if="isFiltering">
+          Mostrando {{ resultCount }} de {{ totalCount }} Pokémon
+         </span>
+         <span v-else>
+          Total: {{ totalCount }} Pokémon
+         </span>
+        </div>
+        <button
+         v-if="hasActiveFilters"
+         class="clear-all-btn"
+         @click="clearFilters"
+         :aria-label="'Limpar todos os ' + activeFiltersCount + ' filtros'"
+        >
+         <ion-icon name="close"></ion-icon>
+         <span>Limpar Tudo</span>
+         <span v-if="activeFiltersCount > 0" class="clear-all-count"
+          >{{ activeFiltersCount }}</span
+         >
+        </button>
+       </div>
+       <h2 class="search-title">
+        <span class="search-title-content">
+         <ion-icon name="options" class="search-title-icon"></ion-icon>
+         Filtros e Visualização
+        </span>
+       </h2>
+       <p class="search-subtitle">Personalize sua busca e modo de exibição</p>
+      </div>
+     </div>
+
+     <!-- Controles Principais - Layout Reestruturado -->
+     <div class="main-controls-section">
+      <div class="main-controls-grid">
+       <!-- Grupo: Pesquisa e Região -->
+       <div class="main-control-group main-control-group--combined">
+        <label class="main-control-label">
+         <ion-icon name="search" class="main-control-icon"></ion-icon>
+         <span>Pesquisa</span>
+        </label>
+        <div class="main-control-inputs">
+         <div class="search-input-wrapper">
+          <ion-icon name="search-outline" class="search-input-icon"></ion-icon>
+          <input
+           ref="searchInput"
+           class="search-input"
+           :class="{ 'search-control--active': filter !== '' }"
+           v-model="filter"
+           type="text"
+           placeholder="Pesquisar Pokémon"
+           aria-label="Pesquisar Pokémon"
+          />
+          <span class="search-input-shortcut">/ ou Ctrl+K</span>
+         </div>
+         <p class="search-input-hint">Pressione / ou Ctrl+K para focar rapidamente a busca.</p>
+         <div class="main-control-subgroup">
+          <label class="main-control-label main-control-label--inline">
+           <ion-icon name="globe" class="main-control-icon"></ion-icon>
+           <span>Região</span>
+          </label>
+          <select
+           class="search-region-select"
+           :class="{ 'search-control--active': selectedRegion !== 'kanto' }"
+           v-model="selectedRegion"
+           @change="changeRegion"
+           aria-label="Selecionar região"
+           title="Região"
+          >
+           <option value="kanto">Kanto (151)</option>
+           <option value="johto" disabled>Johto (100) - Em breve</option>
+           <option value="hoenn" disabled>Hoenn (135) - Em breve</option>
+           <option value="sinnoh" disabled>Sinnoh (107) - Em breve</option>
+          </select>
+         </div>
+        </div>
+       </div>
+
+       <!-- Grupo: Ordenação -->
+       <div class="main-control-group">
+        <label class="main-control-label">
+         <ion-icon name="swap-vertical" class="main-control-icon"></ion-icon>
+         <span>Ordenar</span>
+        </label>
+        <div class="main-control-inputs">
+         <select
+          class="search-sort-select"
+          :class="{ 'search-control--active': sortBy !== 'id' || !sortAscending }"
+          v-model="sortBy"
+          aria-label="Ordenar por"
+          title="Ordenar por"
+         >
+          <option value="id">ID</option>
+          <option value="name">Nome</option>
+          <option value="type">Tipo</option>
+          <option value="weight">Peso</option>
+          <option value="height">Altura</option>
+          <option value="hp">HP</option>
+         </select>
+         <button
+          class="view-toggle-btn view-toggle-btn-compact"
+          :class="{ 'view-toggle-btn--active': !sortAscending }"
+          @click="toggleSortOrder"
+          :aria-label="sortAscending ? 'Ordenar decrescente' : 'Ordenar crescente'"
+          :title="sortAscending ? 'Ordenar Decrescente' : 'Ordenar Crescente'"
+         >
+          <ion-icon
+           :name="sortAscending ? 'arrow-up' : 'arrow-down'"
+          ></ion-icon>
+         </button>
+        </div>
+       </div>
+
+       <!-- Grupo: Visualização -->
+       <div class="main-control-group">
+        <label class="main-control-label">
+         <ion-icon name="eye" class="main-control-icon"></ion-icon>
+         <span>Visualização</span>
+        </label>
+        <div class="main-control-inputs">
+         <button
+          class="view-toggle-btn view-toggle-btn-compact"
+          :class="{ 'view-toggle-btn--active': groupByType }"
+          @click="toggleGroupByType"
+          :aria-label="groupByType ? 'Desabilitar agrupamento' : 'Habilitar agrupamento'"
+          :title="groupByType ? 'Desabilitar Agrupamento' : 'Agrupar por Tipo'"
+         >
+          <ion-icon v-if="groupByType" name="layers"></ion-icon>
+          <ion-icon v-else name="grid-outline"></ion-icon>
+         </button>
+         <button
+          class="view-toggle-btn view-toggle-btn-compact"
+          :class="{ 'view-toggle-btn--active': viewMode === 'list' }"
+          @click="toggleViewMode"
+          :aria-label="'Alternar para modo ' + (viewMode === 'grid' ? 'lista' : 'grid')"
+          :title="viewMode === 'grid' ? 'Modo Lista' : 'Modo Grid'"
+         >
+          <ion-icon v-if="viewMode === 'grid'" name="list"></ion-icon>
+          <ion-icon v-else name="grid"></ion-icon>
+         </button>
+        </div>
+       </div>
+      </div>
+     </div>
+
+     <!-- Filtros Ativos (exceto tipo) -->
+     <div
+      v-if="hasActiveFilters && activeFiltersList.filter(f => f.type !== 'type').length > 0"
+      class="filters-active-section"
+     >
+      <div class="filters-badges-container">
+       <div class="filters-badges">
+        <button
+         v-for="filter in activeFiltersList.filter(f => f.type !== 'type')"
+         :key="filter.type + '-' + filter.value"
+         class="filter-badge"
+         @click="removeFilter(filter.type)"
+         :aria-label="'Remover filtro: ' + filter.label"
+        >
+         <span class="filter-badge-label">{{ filter.label }}</span>
+         <ion-icon name="close-circle" class="filter-badge-remove"></ion-icon>
+        </button>
+       </div>
+      </div>
+     </div>
+
+     <!-- Filtros Avançados (Estatísticas + Tipos) -->
+     <div class="advanced-filters-section">
+      <div class="control-group-label advanced-filters-header" @click="toggleAdvancedFilters">
+       <div class="control-group-label-content">
+        <ion-icon name="options" class="control-group-icon"></ion-icon>
+        <span class="control-group-text">Filtros Avançados</span>
+       </div>
+       <ion-icon 
+        :name="advancedFiltersCollapsed ? 'chevron-down' : 'chevron-up'"
+        class="collapse-icon"
+       ></ion-icon>
+      </div>
+      
+      <div 
+       class="advanced-filters-content"
+       :class="{ 'advanced-filters-content--collapsed': advancedFiltersCollapsed }"
+      >
+       <!-- Filtros por Estatísticas -->
+       <div class="stats-filters-section">
+        <div class="control-group-label stats-filters-header">
+         <div class="control-group-label-content">
+          <ion-icon name="stats-chart" class="control-group-icon"></ion-icon>
+          <span class="control-group-text">Filtros por Estatísticas</span>
+         </div>
+        </div>
+        <div class="stats-filters-grid">
+       <!-- Filtro de HP -->
+       <div class="stats-filter-group">
+        <label class="stats-filter-label">
+         <ion-icon name="heart" class="stats-filter-icon"></ion-icon>
+         <span>HP</span>
+        </label>
+        <div class="stats-filter-inputs">
+         <input
+          type="number"
+          class="stats-filter-input"
+          :value="filterHP.min"
+          @input="filterHP.min = $event.target.value === '' ? null : Number($event.target.value)"
+          placeholder="Mín"
+          min="0"
+          max="255"
+          aria-label="HP mínimo"
+         />
+         <span class="stats-filter-separator">-</span>
+         <input
+          type="number"
+          class="stats-filter-input"
+          :value="filterHP.max"
+          @input="filterHP.max = $event.target.value === '' ? null : Number($event.target.value)"
+          placeholder="Máx"
+          min="0"
+          max="255"
+          aria-label="HP máximo"
+         />
+        </div>
+       </div>
+
+       <!-- Filtro de Peso -->
+       <div class="stats-filter-group">
+        <label class="stats-filter-label">
+         <ion-icon name="barbell" class="stats-filter-icon"></ion-icon>
+         <span>Peso (kg)</span>
+        </label>
+        <div class="stats-filter-inputs">
+         <input
+          type="number"
+          class="stats-filter-input"
+          :value="filterWeight.min"
+          @input="filterWeight.min = $event.target.value === '' ? null : Number($event.target.value)"
+          placeholder="Mín"
+          min="0"
+          step="0.1"
+          aria-label="Peso mínimo"
+         />
+         <span class="stats-filter-separator">-</span>
+         <input
+          type="number"
+          class="stats-filter-input"
+          :value="filterWeight.max"
+          @input="filterWeight.max = $event.target.value === '' ? null : Number($event.target.value)"
+          placeholder="Máx"
+          min="0"
+          step="0.1"
+          aria-label="Peso máximo"
+         />
+        </div>
+       </div>
+
+       <!-- Filtro de Altura -->
+       <div class="stats-filter-group">
+        <label class="stats-filter-label">
+         <ion-icon name="resize" class="stats-filter-icon"></ion-icon>
+         <span>Altura (m)</span>
+        </label>
+        <div class="stats-filter-inputs">
+         <input
+          type="number"
+          class="stats-filter-input"
+          :value="filterHeight.min"
+          @input="filterHeight.min = $event.target.value === '' ? null : Number($event.target.value)"
+          placeholder="Mín"
+          min="0"
+          step="0.1"
+          aria-label="Altura mínima"
+         />
+         <span class="stats-filter-separator">-</span>
+         <input
+          type="number"
+          class="stats-filter-input"
+          :value="filterHeight.max"
+          @input="filterHeight.max = $event.target.value === '' ? null : Number($event.target.value)"
+          placeholder="Máx"
+          min="0"
+          step="0.1"
+          aria-label="Altura máxima"
+         />
+        </div>
+       </div>
+        </div>
+       </div>
+
+       <!-- Tipos de Pokémon Disponíveis -->
+       <div class="pokemon-types-section">
+        <div class="pokemon-types-header">
+         <div class="control-group-label-content">
+          <ion-icon name="pricetag" class="control-group-icon"></ion-icon>
+          <span class="control-group-text">Tipos Disponíveis</span>
+         </div>
+         <div
+          v-if="Array.isArray(filterType) && filterType.length > 0"
+          class="pokemon-types-filter-badges"
+          @click.stop
+         >
+          <button
+           v-for="type in filterType"
+           :key="type"
+           class="filter-badge pokemon-type-filter-badge"
+           @click="removeFilter('type', type)"
+           :aria-label="'Remover filtro de tipo: ' + translateType(type)"
+          >
+           <span class="filter-badge-label">Tipo: {{ translateType(type) }}</span>
+           <ion-icon name="close-circle" class="filter-badge-remove"></ion-icon>
+          </button>
+         </div>
+        </div>
+        <div
+         class="pokemon-types-grid"
+         :class="{ 
+           'pokemon-types-grid--loading': isLoadingMore && isFiltering
+         }"
+        >
+       <button
+        v-for="type in visibleTypes"
+        :key="type.value"
+        class="pokemon-type-badge"
+        :class="{ 
+          'pokemon-type-badge--active': Array.isArray(filterType) && filterType.includes(type.value),
+          'pokemon-type-badge--no-results': type.count === 0 && (!Array.isArray(filterType) || !filterType.includes(type.value))
+        }"
+        :data-type="type.value"
+        @click.stop="selectType(type.value)"
+        :aria-label="'Filtrar por tipo ' + type.label + (type.count > 0 ? ' (' + type.count + ' Pokémon)' : ' (carregando...)')"
+        :title="type.label + (type.count > 0 ? ' (' + type.count + ' Pokémon)' : ' (sem Pokémon carregados ainda)')"
+       >
+        <span class="pokemon-type-badge-icon" :data-type="type.value"></span>
+        <span class="pokemon-type-badge-label">{{ type.label }}</span>
+        <span
+         class="pokemon-type-count-badge"
+         :class="{ 'pokemon-type-count-badge--zero': type.count === 0 }"
+        >
+         {{ type.count > 0 ? type.count : '0' }}
+        </span>
+       </button>
+      </div>
+
+      <!-- Botão Mostrar Mais / Mostrar Menos -->
+      <div
+       v-if="(hasMoreTypes || allTypesVisible) && !advancedFiltersCollapsed"
+       class="pokemon-types-load-more-container"
+      >
+       <!-- Botão Mostrar Mais -->
+       <button
+        v-if="hasMoreTypes && !isLoadingTypes"
+        class="pokemon-types-load-more-btn"
+        @click="loadMoreTypes"
+        :aria-label="'Mostrar mais ' + (availableTypes.length - visibleTypes.length) + ' tipos'"
+       >
+        <ion-icon
+         name="chevron-down"
+         class="pokemon-types-load-more-icon"
+        ></ion-icon>
+        <span class="pokemon-types-load-more-text"
+         >Mostrar Mais ({{ availableTypes.length - visibleTypes.length }}
+         restantes)</span
+        >
+       </button>
+
+       <!-- Botão Mostrar Menos -->
+       <button
+        v-else-if="allTypesVisible && !isLoadingTypes"
+        class="pokemon-types-load-more-btn"
+        @click="collapseTypes"
+        :aria-label="'Ocultar tipos extras'"
+       >
+        <ion-icon
+         name="chevron-up"
+         class="pokemon-types-load-more-icon"
+        ></ion-icon>
+        <span class="pokemon-types-load-more-text">Mostrar Menos</span>
+       </button>
+
+       <!-- Loading State -->
+       <div v-else class="pokemon-types-loading-state">
+        <div class="pokemon-types-loading-spinner"></div>
+        <span class="pokemon-types-loading-text">Carregando tipos...</span>
+       </div>
+      </div>
+     </div>
+    </div>
+     </section>
+     </div>
+    </aside>
+    <transition name="layout-overlay-fade">
+     <div
+      v-if="shouldShowOverlay"
+      class="layout-overlay"
+      @click="closeSidebar"
+      aria-hidden="true"
+     ></div>
+    </transition>
+    <main class="layout-main">
+     <div class="layout-main-toolbar">
+      <button
+       type="button"
+       class="sidebar-toggle-btn"
+       @click="toggleSidebar"
+       :aria-expanded="sidebarAberta"
+       aria-controls="layout-sidebar"
+       :aria-label="sidebarAberta ? 'Recolher painel de filtros' : 'Mostrar painel de filtros'"
+       :title="sidebarAberta ? 'Recolher painel de filtros' : 'Mostrar painel de filtros'"
+      >
+       <ion-icon :name="sidebarAberta ? 'chevron-back-outline' : 'options-outline'"></ion-icon>
+       <span class="sidebar-toggle-label">{{ sidebarAberta ? 'Ocultar filtros' : 'Mostrar filtros' }}</span>
+      </button>
+     </div>
+     <section
+      id="main-content"
+      class="content-section"
+      aria-label="Lista de Pokémon"
+     >
+    <!-- Loading State -->
+    <div v-if="isLoading" class="loading-container">
+     <div v-for="n in 12" :key="'skeleton-' + n" class="skeleton-card">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text short"></div>
+      <div class="skeleton-text long"></div>
+     </div>
+    </div>
+
+    <!-- Empty State -->
+    <div v-else-if="!isLoading && !hasResults" class="empty-state">
+     <div class="empty-state-icon">
+      <ion-icon name="search"></ion-icon>
+     </div>
+     <h2 class="empty-state-title">Nenhum Pokémon encontrado</h2>
+     <p class="empty-state-message">
+      <span v-if="isFiltering">
+       Não encontramos Pokémon que correspondam aos seus filtros. Tente ajustar
+       sua busca.
+      </span>
+      <span v-else>
+       Ainda não há Pokémon carregados. Aguarde um momento...
+      </span>
+     </p>
+     <div v-if="isFiltering" class="empty-state-actions">
+      <button class="empty-state-button" @click="clearFilters">
+       Limpar Filtros
+      </button>
+     </div>
+    </div>
+
+    <!-- Grid/Lista de Pokémon -->
+    <div v-else class="content-section">
+     <div
+      v-if="isMobilePortrait"
+      class="mobile-grid-density-controls"
+      role="group"
+      aria-label="Ajustar densidade de cards"
+     >
+      <span class="mobile-grid-density-label">Cartas por linha</span>
+      <div class="mobile-grid-density-buttons">
+       <button
+        class="view-toggle-btn view-toggle-btn-compact view-toggle-btn--density"
+        :class="{
+         'view-toggle-btn--active': viewMode === 'grid' && gridDensity === 'double',
+         'view-toggle-btn--disabled': viewMode !== 'grid'
+        }"
+        @click="setGridDensity('double')"
+        :disabled="viewMode !== 'grid'"
+        :aria-label="viewMode === 'grid' ? 'Ver dois cards por linha' : 'Disponível apenas no modo grid'"
+       >
+        <ion-icon name="grid"></ion-icon>
+       </button>
+       <button
+        class="view-toggle-btn view-toggle-btn-compact view-toggle-btn--density"
+        :class="{
+         'view-toggle-btn--active': viewMode === 'grid' && gridDensity === 'single',
+         'view-toggle-btn--disabled': viewMode !== 'grid'
+        }"
+        @click="setGridDensity('single')"
+        :disabled="viewMode !== 'grid'"
+        :aria-label="viewMode === 'grid' ? 'Ver um card por linha' : 'Disponível apenas no modo grid'"
+       >
+        <ion-icon name="tablet-portrait-outline"></ion-icon>
+       </button>
+      </div>
+     </div>
+     <div v-for="(group, groupIndex) in groupedList" :key="group.type">
+      <div v-if="groupByType && group.type !== 'all'" class="pokemon-group">
+       <div class="pokemon-group-header">
+        <h2 class="pokemon-group-title">{{ group.label }}</h2>
+        <span class="pokemon-group-count"
+         >{{ group.pokemon.length }} Pokémon</span
+        >
+       </div>
+      </div>
+      <div :class="['pokemons-container', viewModeClass, gridDensityClass]">
+       <div
+        class="pokemon-card"
+        v-for="(item, index) in group.pokemon"
+        :key="item.id"
+        :data-pokemon-type="item.types && item.types[0] ? item.types[0].type.name : 'normal'"
+        :style="{ 
+                                'animation-delay': (index % 10 * 0.03) + 's'
+                            }"
+       >
+        <a
+         class="pokemon-card-link"
+         @click="openPokedex(item)"
+         :aria-label="'Ver detalhes de ' + item.name"
+        >
+         <!-- Modo Lista: Estrutura similar ao modal (imagem esquerda, info direita) -->
+         <template v-if="viewMode === 'list'">
+          <!-- Seção de Imagem - Lado Esquerdo (45%) -->
+          <div
+           class="pokemon-card-image-section"
+           :data-pokemon-type="item.types && item.types[0] ? item.types[0].type.name : 'normal'"
+          >
+           <div class="pokemon-card-id">{{ formatPokemonId(item.id) }}</div>
+           <div class="pokemon-card-image-container">
+            <img
+             class="pokemon-card-image-default"
+             loading="lazy"
+             :src="item.sprites.front_default"
+             :alt="item.name"
+             @error="$event.target.style.display='none'"
+            />
+            <img
+             v-if="item.sprites.back_default"
+             class="pokemon-card-image-back"
+             loading="lazy"
+             :src="item.sprites.back_default"
+             :alt="item.name + ' (Verso)'"
+             @error="$event.target.style.display='none'"
+            />
+           </div>
+          </div>
+
+          <!-- Seção de Informações - Lado Direito (55%) -->
+          <div class="pokemon-card-info-section">
+           <!-- Header com Nome, ID, Tipos e HP -->
+           <div class="pokemon-card-info-header">
+            <div class="pokemon-card-info-title">
+             <h5 class="pokemon-name">{{item.name}}</h5>
+             <div class="pokemon-types">
+              <span
+               class="pokemon-type-label"
+               v-for="type in item.types"
+               :key="type.type.name"
+               :style="{ 'background-color': 'var(--' + type.type.name + '-type)' }"
+              >
+               {{ translateType(type.type.name) }}
+              </span>
+             </div>
+            </div>
+            <div v-if="item.stats && item.stats.length > 0" class="pokemon-hp">
+             <ion-icon name="heart" class="pokemon-hp-icon"></ion-icon>
+             <span class="pokemon-hp-value"
+              >{{ item.stats.find(s => s.stat.name === 'hp')?.base_stat || 0
+              }}</span
+             >
+            </div>
+
+           </div>
+
+           <!-- Estatísticas Básicas (Peso e Altura) -->
+           <div class="pokemon-card-stats">
+            <div class="stat-item" v-if="item.weight">
+             <ion-icon name="barbell" class="stat-icon"></ion-icon>
+             <span class="stat-value">{{ (item.weight / 10).toFixed(1) }}</span>
+             <span class="stat-label">Peso</span>
+            </div>
+            <div class="stat-item" v-if="item.height">
+             <ion-icon name="resize" class="stat-icon"></ion-icon>
+             <span class="stat-value">{{ (item.height / 10).toFixed(1) }}</span>
+             <span class="stat-label">Altura</span>
+            </div>
+           </div>
+
+           <!-- Estatísticas de Batalha -->
+           <div v-if="item.stats" class="pokemon-card-battle-stats">
+            <div
+             class="battle-stat-item"
+             v-for="stat in item.stats.filter(s => ['hp', 'attack', 'defense', 'special-attack', 'special-defense', 'speed'].includes(s.stat.name))"
+             :key="stat.stat.name"
+            >
+             <ion-icon
+              :name="stat.stat.name === 'hp' ? 'heart' : stat.stat.name === 'attack' ? 'flash' : stat.stat.name === 'defense' ? 'shield' : stat.stat.name === 'special-attack' ? 'flame' : stat.stat.name === 'special-defense' ? 'shield-checkmark-outline' : 'speedometer-outline'"
+              class="battle-stat-icon"
+             ></ion-icon>
+             <span class="battle-stat-label"
+              >{{ stat.stat.name === 'hp' ? 'HP' : stat.stat.name === 'attack' ?
+              'ATQ' : stat.stat.name === 'defense' ? 'DEF' : stat.stat.name ===
+              'special-attack' ? 'ATQ.ESP' : stat.stat.name ===
+              'special-defense' ? 'DEF.ESP' : 'VEL' }}</span
+             >
+             <span class="battle-stat-value">{{ stat.base_stat }}</span>
+            </div>
+           </div>
+
+           <!-- Habilidades -->
+           <div
+            v-if="item.abilities && item.abilities.length > 0"
+            class="pokemon-card-abilities"
+           >
+            <div
+             class="ability-item"
+             v-for="ability in item.abilities.slice(0, 2)"
+             :key="ability.ability.name"
+            >
+             <ion-icon
+              :name="ability.is_hidden ? 'eye-off' : 'sparkles'"
+              class="ability-icon"
+             ></ion-icon>
+             <span class="ability-name">{{ ability.ability.name }}</span>
+            </div>
+           </div>
+          </div>
+         </template>
+
+         <!-- Modo Grid: Layout original -->
+         <template v-else>
+          <!-- Header TCG - Nome, Tipo e HP -->
+          <div class="pokemon-card-header">
+           <div class="pokemon-card-title-section">
+            <span class="pokemon-id-header"
+             >{{ formatPokemonId(item.id) }}</span
+            >
+            <h5 class="pokemon-name">{{item.name}}</h5>
+            <div class="pokemon-types">
+             <span
+              class="pokemon-type-label"
+              v-for="type in item.types"
+              :key="type.type.name"
+              :style="{ 'background-color': 'var(--' + type.type.name + '-type)' }"
+             >
+              {{ translateType(type.type.name) }}
+             </span>
+            </div>
+           </div>
+           <div v-if="item.stats && item.stats.length > 0" class="pokemon-hp">
+            <ion-icon name="heart" class="pokemon-hp-icon"></ion-icon>
+            <span class="pokemon-hp-value"
+             >{{ item.stats.find(s => s.stat.name === 'hp')?.base_stat || 0
+             }}</span
+            >
+           </div>
+          </div>
+
+          <!-- Área de Arte Central -->
+          <div class="pokemon-card-art">
+           <div class="pokemon-card-image-wrapper">
+            <img
+             class="pokemon-card-image-default"
+             loading="lazy"
+             :src="item.sprites.front_default"
+             :alt="item.name"
+             @error="$event.target.style.display='none'"
+            />
+            <img
+             v-if="item.sprites.back_default"
+             class="pokemon-card-image-back"
+             loading="lazy"
+             :src="item.sprites.back_default"
+             :alt="item.name + ' (Verso)'"
+             @error="$event.target.style.display='none'"
+            />
+           </div>
+          </div>
+
+          <!-- Informações do Card -->
+          <div class="pokemon-card-info">
+           <div class="pokemon-card-stats">
+            <div class="stat-item" v-if="item.weight">
+             <ion-icon name="barbell" class="stat-icon"></ion-icon>
+             <span class="stat-value">{{ (item.weight / 10).toFixed(1) }}</span>
+             <span class="stat-label">Peso</span>
+            </div>
+            <div class="stat-item" v-if="item.height">
+             <ion-icon name="resize" class="stat-icon"></ion-icon>
+             <span class="stat-value">{{ (item.height / 10).toFixed(1) }}</span>
+             <span class="stat-label">Altura</span>
+            </div>
+           </div>
+          </div>
+         </template>
+
+         <!-- Footer TCG -->
+         <div class="pokemon-card-footer"></div>
+        </a>
+       </div>
+      </div>
+     </div>
+
+     <!-- Sentinel para Scroll Infinito -->
+     <!-- Só mostrar sentinel quando não está filtrando (lazy loading normal) -->
+     <div
+      v-if="!isLoading && hasMore && !isFiltering"
+      ref="scrollSentinel"
+      class="scroll-sentinel"
+      aria-hidden="true"
+     >
+      <div v-if="isLoadingMore" class="scroll-loading">
+       <div class="loading-spinner"></div>
+       <span>Carregando mais Pokémon...</span>
+      </div>
+     </div>
+    </div>
+     </section>
+    </main>
+   </div>
+
+   <!-- Modal de Detalhes (fora do content-section para overlay fixo) -->
+   <transition name="modal">
+    <div
+     v-if="pokedexOpen && selectedPokemon"
+     class="pokedex-modal-overlay"
+     @click.self="closePokedex()"
+     role="dialog"
+     aria-modal="true"
+     :aria-labelledby="selectedPokemon && selectedPokemon.id ? 'pokedex-title-' + selectedPokemon.id : ''"
+     :aria-label="selectedPokemon ? 'Detalhes do Pokémon ' + selectedPokemon.name : 'Detalhes do Pokémon'"
+    >
+     <div
+      class="pokedex-modal"
+      :data-pokemon-type="selectedPokemon.types && selectedPokemon.types[0] ? selectedPokemon.types[0].type.name : 'normal'"
+      ref="modalContent"
+     >
+      <button
+       class="pokedex-close-btn"
+       @click="closePokedex()"
+       aria-label="Fechar modal de detalhes do Pokémon"
+       ref="closeButton"
+      >
+       ×
+      </button>
+
+      <!-- Seção de Imagens - Lado Esquerdo -->
+      <div class="pokedex-image-section">
+       <div class="pokedex-id">{{ formatPokemonId(selectedPokemon.id) }}</div>
+
+       <!-- Galeria de Imagens -->
+       <div class="pokedex-image-container">
+        <img
+         v-if="currentImageUrl"
+         class="pokedex-image"
+         :src="currentImageUrl"
+         :alt="selectedPokemon.name"
+         @error="$event.target.style.display='none'"
+        />
+        <div v-else class="pokedex-image-placeholder">
+         <span>Imagem não disponível</span>
+        </div>
+
+        <!-- Miniaturas da galeria -->
+        <div v-if="availableImages.length > 1" class="pokedex-image-gallery">
+         <button
+          v-for="image in availableImages"
+          :key="image.mode + '-thumb'"
+          class="pokedex-image-thumb"
+          :class="{ 'active': imageViewMode === image.mode }"
+          @click="setImageViewMode(image.mode)"
+          :title="image.label"
+          :aria-label="image.label"
+         >
+          <img
+           :src="image.url"
+           :alt="image.label"
+           @error="$event.target.style.display='none'"
+          />
+          <ion-icon :name="image.icon" class="thumb-icon"></ion-icon>
+         </button>
+        </div>
+       </div>
+
+       <div class="pokedex-navigation" role="navigation" aria-label="Navegação entre Pokémon">
+        <button
+         class="pokedex-nav-btn"
+         @click="previousPokemon"
+         :disabled="!selectedPokemon.id || filteredList.findIndex(p => p.id === selectedPokemon.id) === 0"
+         aria-label="Ver Pokémon anterior"
+         ref="prevButton"
+        >
+         <ion-icon name="chevron-back-outline" class="pokedex-nav-icon" aria-hidden="true"></ion-icon>
+         <span class="pokedex-nav-label">Anterior</span>
+        </button>
+        <span class="pokedex-nav-info" aria-live="polite" aria-atomic="true">
+         <template v-if="selectedPokemon.id">
+          {{ filteredList.findIndex(p => p.id === selectedPokemon.id) + 1 }} /
+          {{ filteredList.length }}
+         </template>
+        </span>
+        <button
+         class="pokedex-nav-btn"
+         @click="nextPokemon"
+         :disabled="!selectedPokemon.id || filteredList.findIndex(p => p.id === selectedPokemon.id) === filteredList.length - 1"
+         aria-label="Ver próximo Pokémon"
+         ref="nextButton"
+        >
+         <span class="pokedex-nav-label">Próximo</span>
+         <ion-icon name="chevron-forward-outline" class="pokedex-nav-icon" aria-hidden="true"></ion-icon>
+        </button>
+       </div>
+      </div>
+
+      <!-- Seção de Informações - Lado Direito -->
+      <div class="pokedex-info-section">
+       <div class="pokedex-header">
+        <h1 
+         class="pokedex-name"
+         :id="'pokedex-title-' + (selectedPokemon.id || '')"
+        >{{ selectedPokemon.name || 'Pokémon' }}</h1>
+        <div 
+         v-if="selectedPokemon.types" 
+         class="pokedex-types-header"
+         role="list"
+         aria-label="Tipos do Pokémon"
+        >
+         <span
+          class="pokedex-type-badge"
+          v-for="type in selectedPokemon.types"
+          :key="type.type.name"
+          :style="{ 'background-color': 'var(--' + type.type.name + '-type)' }"
+          role="listitem"
+         >
+          {{ translateType(type.type.name) }}
+         </span>
+        </div>
+       </div>
+
+       <!-- Sistema de Abas -->
+       <div class="pokedex-tabs" v-if="selectedPokemon.weight !== undefined">
+        <div class="pokedex-tabs-header" role="tablist" aria-label="Seções de informações do Pokémon">
+         <button
+          class="pokedex-tab"
+          :class="{ 'active': activeTab === 'info' }"
+          @click="changeTab('info')"
+          role="tab"
+          :aria-selected="activeTab === 'info'"
+          aria-controls="pokedex-tab-info"
+          id="pokedex-tab-btn-info"
+         >
+          <ion-icon name="information-circle"></ion-icon>
+          <span>Informações</span>
+         </button>
+         <button
+          class="pokedex-tab"
+          :class="{ 'active': activeTab === 'moves' }"
+          @click="changeTab('moves')"
+          role="tab"
+          :aria-selected="activeTab === 'moves'"
+          aria-controls="pokedex-tab-moves"
+          id="pokedex-tab-btn-moves"
+         >
+          <ion-icon name="flash"></ion-icon>
+          <span>Movimentos</span>
+         </button>
+         <button
+          class="pokedex-tab"
+          :class="{ 'active': activeTab === 'evolution' }"
+          @click="changeTab('evolution')"
+          role="tab"
+          :aria-selected="activeTab === 'evolution'"
+          aria-controls="pokedex-tab-evolution"
+          id="pokedex-tab-btn-evolution"
+         >
+          <ion-icon name="git-branch"></ion-icon>
+          <span>Evoluções</span>
+         </button>
+        </div>
+
+        <div class="pokedex-tabs-content">
+         <!-- Aba Informações -->
+         <div
+          v-show="activeTab === 'info'"
+          class="pokedex-tab-panel"
+          role="tabpanel"
+          aria-labelledby="pokedex-tab-btn-info"
+          id="pokedex-tab-info"
+         >
+          <div class="pokedex-content">
+           <!-- Informações Básicas -->
+           <div class="pokedex-section">
+            <h3 class="pokedex-section-title">Informações Básicas</h3>
+            <div class="pokedex-basic-info">
+             <div class="basic-info-item">
+              <ion-icon name="barbell" class="basic-info-icon"></ion-icon>
+              <div class="basic-info-content">
+               <span class="basic-info-label">Peso</span>
+               <span class="basic-info-value">{{ convertWeightToKg(selectedPokemon.weight || 0) }} kg</span>
+              </div>
+             </div>
+             <div class="basic-info-item">
+              <ion-icon name="resize" class="basic-info-icon"></ion-icon>
+              <div class="basic-info-content">
+               <span class="basic-info-label">Altura</span>
+               <span class="basic-info-value">{{ convertHeightToM(selectedPokemon.height || 0) }} m</span>
+              </div>
+             </div>
+             <div class="basic-info-item" v-if="selectedPokemon.base_experience">
+              <ion-icon name="star" class="basic-info-icon"></ion-icon>
+              <div class="basic-info-content">
+               <span class="basic-info-label">Experiência Base</span>
+               <span class="basic-info-value">{{ selectedPokemon.base_experience }} XP</span>
+              </div>
+             </div>
+             <div class="basic-info-item" v-if="selectedPokemon.order">
+              <ion-icon name="list" class="basic-info-icon"></ion-icon>
+              <div class="basic-info-content">
+               <span class="basic-info-label">Ordem</span>
+               <span class="basic-info-value">#{{ selectedPokemon.order }}</span>
+              </div>
+             </div>
+            </div>
+           </div>
+
+           <!-- Resumo de Estatísticas - Total, Melhor e Pior -->
+           <div class="pokedex-section pokedex-stats-summary" v-if="selectedPokemon.stats && selectedPokemon.stats.length > 0">
+            <h3 class="pokedex-section-title">Resumo de Estatísticas</h3>
+            <div class="stats-summary-grid">
+             <div class="stat-summary-item stat-summary-total">
+              <ion-icon name="stats-chart" class="stat-summary-icon" aria-hidden="true"></ion-icon>
+              <div class="stat-summary-content">
+               <span class="stat-summary-label">Total</span>
+               <span class="stat-summary-value">{{ totalStats }}</span>
+              </div>
+             </div>
+             <div class="stat-summary-item stat-summary-best" v-if="bestStat">
+              <ion-icon name="trending-up" class="stat-summary-icon" aria-hidden="true"></ion-icon>
+              <div class="stat-summary-content">
+               <span class="stat-summary-label">Melhor</span>
+               <span class="stat-summary-value">{{ bestStat.base_stat }}</span>
+               <span class="stat-summary-name">{{ bestStat.stat.name }}</span>
+              </div>
+             </div>
+             <div class="stat-summary-item stat-summary-worst" v-if="worstStat">
+              <ion-icon name="trending-down" class="stat-summary-icon" aria-hidden="true"></ion-icon>
+              <div class="stat-summary-content">
+               <span class="stat-summary-label">Pior</span>
+               <span class="stat-summary-value">{{ worstStat.base_stat }}</span>
+               <span class="stat-summary-name">{{ worstStat.stat.name }}</span>
+              </div>
+             </div>
+            </div>
+           </div>
+
+           <div class="pokedex-section" v-if="selectedPokemon.stats">
+            <h3 class="pokedex-section-title">Estatísticas Detalhadas</h3>
+            <div class="pokedex-stats">
+             <div
+              v-for="stat in selectedPokemon.stats"
+              :key="stat.stat.name"
+              class="pokedex-stat"
+             >
+              <div class="stat-header">
+               <p class="pokedex-stat-name">{{ stat.stat.name }}</p>
+               <p class="pokedex-stat-value">{{ stat.base_stat }}</p>
+              </div>
+              <div class="stat-bar-container">
+               <div
+                class="stat-bar"
+                :style="{ 
+                                                 'width': ((stat.base_stat || 0) / 255 * 100) + '%'
+                                             }"
+               ></div>
+              </div>
+             </div>
+            </div>
+           </div>
+
+          </div>
+         </div>
+
+         <!-- Aba Movimentos -->
+         <div
+          v-show="activeTab === 'moves'"
+          class="pokedex-tab-panel"
+          role="tabpanel"
+          aria-labelledby="pokedex-tab-btn-moves"
+          id="pokedex-tab-moves"
+         >
+          <div class="pokedex-content">
+           <div v-if="isLoadingAdditionalData && pokemonMoves.length === 0 && (!selectedPokemon.abilities || selectedPokemon.abilities.length === 0)" class="pokedex-loading">
+            <div class="loading-spinner"></div>
+            <span>Carregando informações...</span>
+           </div>
+           <div v-else-if="pokemonMoves.length === 0 && (!selectedPokemon.abilities || selectedPokemon.abilities.length === 0) && !isLoadingAdditionalData" class="pokedex-empty">
+            <ion-icon name="flash-outline"></ion-icon>
+            <p>Nenhuma informação disponível</p>
+           </div>
+           <div v-else class="pokedex-moves-section">
+            <!-- Seção de Habilidades -->
+            <div class="pokedex-section" v-if="selectedPokemon.abilities && selectedPokemon.abilities.length > 0">
+             <h3 class="pokedex-section-title">Habilidades</h3>
+             <div class="pokedex-abilities">
+              <div
+               v-for="ability in (pokemonAbilitiesDetails.length > 0 ? pokemonAbilitiesDetails : selectedPokemon.abilities)"
+               :key="ability.ability.name"
+               class="ability-item"
+              >
+               <ion-icon
+                :name="ability.is_hidden ? 'eye-off' : 'sparkles'"
+                class="ability-icon"
+               ></ion-icon>
+               <div class="ability-content">
+                <div class="ability-header">
+                 <span class="ability-name">{{ ability.ability.name }}</span>
+                 <span v-if="ability.is_hidden" class="ability-hidden">(Oculta)</span>
+                </div>
+                <p v-if="ability.description" class="ability-description">{{ ability.description }}</p>
+               </div>
+              </div>
+             </div>
+            </div>
+
+            <!-- Seção de Movimentos -->
+            <div v-if="pokemonMoves && pokemonMoves.length > 0">
+             <h3 class="pokedex-section-title" style="margin-top: var(--spacing-md); margin-bottom: var(--spacing-sm);">Movimentos</h3>
+             
+             <!-- Abas de Geração para Movimentos -->
+             <div class="pokedex-moves-generations" role="tablist" aria-label="Gerações de movimentos" v-if="pokemonMoves && pokemonMoves.length > 0">
+            <button
+             class="pokedex-move-gen-tab"
+             :class="{ 'active': activeMoveGeneration === 'all' }"
+             @click="changeMoveGeneration('all')"
+             role="tab"
+             :aria-selected="activeMoveGeneration === 'all'"
+            >
+              Todas
+             </button>
+            <button
+             v-for="(gen, index) in availableGenerations"
+             :key="'gen-' + index + '-' + gen"
+             class="pokedex-move-gen-tab"
+             :class="{ 'active': activeMoveGeneration === gen }"
+             @click="changeMoveGeneration(gen)"
+             role="tab"
+             :aria-selected="activeMoveGeneration === gen"
+            >
+              Gen {{ gen }}
+             </button>
+            </div>
+
+              <!-- Lista de Movimentos -->
+              <div class="pokedex-moves-list">
+               <div
+                v-for="move in visibleMoves"
+                :key="move.move.name"
+                class="pokedex-move-item"
+               >
+                <div class="move-header">
+                 <h4 class="move-name">{{ move.move.name }}</h4>
+                 <span class="move-generation-badge" v-if="getMoveGenerationSimple(move) !== 'all'">
+                  Gen {{ getMoveGenerationSimple(move) }}
+                 </span>
+                </div>
+                <div class="move-simple-info">
+                 <span class="move-level-badge" v-if="getMinLevelSimple(move)">
+                  Nv. {{ getMinLevelSimple(move) }}
+                 </span>
+                </div>
+               </div>
+              </div>
+              <div class="pokedex-moves-actions" v-if="hasMoreMoves || canCollapseMoves">
+               <button
+                v-if="hasMoreMoves"
+                type="button"
+                class="pokedex-moves-toggle"
+                @click="showMoreMoves"
+                aria-label="Mostrar mais movimentos"
+               >
+                <ion-icon name="flash-outline" class="pokedex-moves-toggle-icon" aria-hidden="true"></ion-icon>
+                <span>Mostrar mais movimentos</span>
+               </button>
+               <button
+                v-if="canCollapseMoves"
+                type="button"
+                class="pokedex-moves-toggle pokedex-moves-toggle--secondary"
+                @click="showLessMoves"
+                aria-label="Mostrar menos movimentos"
+               >
+                <ion-icon name="chevron-up-outline" class="pokedex-moves-toggle-icon" aria-hidden="true"></ion-icon>
+                <span>Mostrar menos</span>
+               </button>
+              </div>
+             </div>
+            </div>
+           </div>
+          </div>
+          
+        <!-- Aba Evoluções -->
+        <div
+        v-show="activeTab === 'evolution'"
+        class="pokedex-tab-panel"
+        role="tabpanel"
+        aria-labelledby="pokedex-tab-btn-evolution"
+        id="pokedex-tab-evolution"
+       >
+        <div class="pokedex-content">
+         <div
+          v-if="isLoadingAdditionalData && (!evolutionChain || evolutionChain.length === 0)"
+          class="pokedex-loading"
+         >
+          <div class="loading-spinner"></div>
+          <span>Carregando evoluções...</span>
+         </div>
+         <div
+          v-else-if="!isLoadingAdditionalData && (!evolutionChain || evolutionChain.length === 0)"
+          class="pokedex-empty"
+         >
+          <ion-icon name="git-branch-outline"></ion-icon>
+          <p>Nenhuma evolução disponível</p>
+         </div>
+         <div v-else class="pokedex-evolution-section">
+          <div class="pokedex-section pokedex-evolution-wrapper">
+           <div class="pokedex-evolution-header">
+            <h3 class="pokedex-section-title">Linha Evolutiva</h3>
+            <p class="pokedex-evolution-subtitle">
+             Visualize como {{ selectedPokemon.name }} evolui e navegue entre as formas disponíveis.
+            </p>
+           </div>
+           <div class="pokedex-evolution-container">
+           <div class="evolution-chain">
+            <template v-for="(evolution, index) in evolutionChain" :key="evolution.id || index">
+             <div
+              class="evolution-item"
+              :class="{ 'evolution-current': evolution.id === selectedPokemon.id }"
+             >
+              <div class="evolution-pokemon">
+               <div class="evolution-image-container">
+                <template v-if="getEvolutionPokemonImage(evolution.id)">
+                 <img
+                  :src="getEvolutionPokemonImage(evolution.id)"
+                  :alt="evolution.name"
+                  class="evolution-image"
+                  @error="handleEvolutionImageError($event)"
+                 />
+                 <div class="evolution-image-placeholder evolution-image-placeholder--hidden">
+                  <span>#{{ evolution.id }}</span>
+                 </div>
+                </template>
+                <div v-else class="evolution-image-placeholder">
+                 <span>#{{ evolution.id }}</span>
+                </div>
+               </div>
+               <h4 class="evolution-name">{{ evolution.name }}</h4>
+               <div class="evolution-id">{{ formatPokemonId(evolution.id) }}</div>
+              </div>
+            <button
+             v-if="evolution.id"
+             class="evolution-view-btn"
+             @click="openEvolutionPokemon(evolution.id)"
+             :disabled="evolution.id === selectedPokemon.id"
+             :aria-label="evolution.id === selectedPokemon.id ? evolution.name + ' já está selecionado' : 'Ver detalhes de ' + evolution.name"
+            >
+             <span v-if="evolution.id === selectedPokemon.id">Selecionado</span>
+             <span v-else>Ver Detalhes</span>
+            </button>
+             </div>
+
+             <div
+              v-if="index < evolutionChain.length - 1"
+              class="evolution-arrow"
+             >
+            <div class="evolution-arrow-connector" aria-hidden="true">
+             <span class="evolution-arrow-line evolution-arrow-line--left"></span>
+             <div class="evolution-arrow-icon">
+              <ion-icon name="arrow-forward"></ion-icon>
+             </div>
+             <span class="evolution-arrow-line evolution-arrow-line--right"></span>
+            </div>
+            <div
+             v-if="evolutionChain[index + 1] && evolutionChain[index + 1].details && evolutionChain[index + 1].details.length > 0"
+             class="evolution-arrow-details"
+            >
+             <span
+              v-for="(detail, detailIndex) in evolutionChain[index + 1].details"
+              :key="detailIndex"
+              class="evolution-detail-badge"
+             >
+              {{ detail.label }}
+             </span>
+            </div>
+             </div>
+            </template>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+
+       </div>
+         </div>
+
+       </div>
+      </div>
+     </div>
+    </div>
+   </transition>
+  </div>
+ </body>
+
+ <script src="https://unpkg.com/vue@3"></script>
+ <script>
+  // Aguardar Vue carregar antes de continuar
+  if (typeof Vue === 'undefined') {
+   console.error('Vue.js não foi carregado corretamente!');
+  }
+ </script>
+<script src="./assets/js/utils/type-translator.js"></script>
+<script src="./assets/js/utils/normalizer.js"></script>
+<script src="./assets/js/utils/sorter.js"></script>
+<script src="./assets/js/utils/debounce.js"></script>
+<script src="./assets/js/utils/validators.js"></script>
+<script src="./assets/js/utils/pokemon-data-utils.js"></script>
+ <script src="./assets/js/utils/error-handler.js"></script>
+ <script src="./assets/js/utils/cache-manager.js"></script>
+ <script src="./assets/js/utils/tooltip.js"></script>
+ <script src="./assets/js/filters/pokemon-filters.js"></script>
+ <script src="./assets/js/services/pokemon-api.js"></script>
+ <script>
+  // Verificar se todas as dependências foram carregadas
+  if (
+   typeof window.translateTypeUtil === 'undefined' ||
+   typeof window.getTranslatedTypesForSelect === 'undefined' ||
+   typeof window.normalizeText === 'undefined' ||
+   typeof window.sortPokemonById === 'undefined' ||
+   typeof window.filterPokemonList === 'undefined' ||
+   typeof window.PokemonApiService === 'undefined'
+  ) {
+   console.error('Algumas dependências não foram carregadas!');
+   console.log('Verificando:', {
+    translateTypeUtil: typeof window.translateTypeUtil,
+    getTranslatedTypesForSelect: typeof window.getTranslatedTypesForSelect,
+    normalizeText: typeof window.normalizeText,
+    sortPokemonById: typeof window.sortPokemonById,
+    filterPokemonList: typeof window.filterPokemonList,
+    PokemonApiService: typeof window.PokemonApiService,
+   });
+  }
+ </script>
+ <script src="./assets/js/main.js"></script>
 </html>

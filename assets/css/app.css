@@ -1,0 +1,33 @@
+/* Importar variáveis primeiro */
+@import './variables.css';
+
+/* Importar estilos base */
+@import './base.css';
+
+/* Importar componentes */
+@import './components/layout.css';
+@import './components/header.css';
+@import './components/search.css';
+@import './components/view-toggle.css';
+@import './components/pokemon-card.css';
+@import './components/pokemon-list.css';
+@import './components/pokemon-image-gallery.css';
+/* Importar módulos do modal separadamente (evitar @import aninhados) */
+@import './components/pokedex-modal-overlay.css';
+@import './components/pokedex-modal-container.css';
+@import './components/pokedex-modal-image-section.css';
+@import './components/pokedex-modal-info-section.css';
+@import './components/pokedex-modal-navigation.css';
+@import './components/pokedex-modal-sections.css';
+@import './components/pokedex-modal-stats-summary.css';
+@import './components/pokedex-modal-tabs.css';
+@import './components/pokedex-modal-moves.css';
+@import './components/pokedex-modal-evolution.css';
+@import './components/pokedex-modal-animations.css';
+@import './components/pokedex-modal.css';
+@import './components/loading.css';
+@import './components/empty-state.css';
+@import './components/notification.css';
+@import './components/load-more.css';
+@import './components/tooltip.css';
+

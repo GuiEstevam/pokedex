@@ -1,0 +1,40 @@
+/* Content Section - Mantido aqui por compatibilidade */
+.content-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: var(--spacing-xl);
+}
+
+/* No modo lista, permitir que o content-section ocupe toda a largura */
+.content-section:has(.pokemons-container.view-mode-list) {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* No modo lista, permitir que o conteúdo ocupe toda a largura */
+.content-section > div > .pokemons-container.view-mode-list {
+    max-width: 100% !important;
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+/* Garantir que o wrapper div também permita largura total no modo lista */
+.content-section > div:has(.pokemons-container.view-mode-list) {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Fallback para navegadores que não suportam :has() - aplicar diretamente no container */
+.pokemons-container.view-mode-list {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+/* Nota: Os módulos do modal são importados diretamente em app.css
+   para evitar problemas com @import aninhados em alguns navegadores */

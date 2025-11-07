@@ -1,0 +1,352 @@
+.pokedex-evolution-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    width: 100%;
+}
+
+.pokedex-evolution-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    width: 100%;
+}
+
+.pokedex-evolution-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    text-align: left;
+}
+
+.pokedex-evolution-subtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.4;
+}
+
+.pokedex-evolution-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: var(--spacing-md) 0 var(--spacing-lg);
+}
+
+.evolution-chain {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    max-width: 820px;
+}
+
+.evolution-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: calc(var(--spacing-sm) + 2px) var(--spacing-md);
+    background: var(--background-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s var(--ease-out-smooth), box-shadow 0.3s var(--ease-out-smooth), border-color 0.3s var(--ease-out-smooth);
+    max-width: 190px;
+    width: 100%;
+}
+
+.evolution-item:hover {
+    border-color: var(--modal-highlight);
+    box-shadow: 0 6px 20px var(--modal-highlight-ring);
+    transform: translateY(-4px) scale(1.02);
+}
+
+.evolution-item.evolution-current {
+    border-color: var(--modal-highlight);
+    background: linear-gradient(135deg, var(--modal-highlight-ring) 0%, transparent 100%);
+    box-shadow: 0 0 0 4px var(--modal-highlight-ring), 0 8px 24px var(--modal-highlight-ring);
+    transform: scale(1.02);
+}
+
+.evolution-pokemon {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: center;
+    width: 100%;
+}
+
+.evolution-image-container {
+    width: 128px;
+    height: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.evolution-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s var(--ease-out-smooth);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.evolution-item:hover .evolution-image {
+    transform: scale(1.07);
+}
+
+.evolution-item.evolution-current .evolution-image {
+    filter: drop-shadow(0 0 12px var(--modal-highlight-ring));
+}
+
+.evolution-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-hover);
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius-lg);
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.evolution-image-placeholder--hidden {
+    display: none !important;
+}
+
+.evolution-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.evolution-id {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: -4px;
+}
+
+.evolution-view-btn {
+    width: 100%;
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: linear-gradient(135deg, var(--modal-highlight), var(--modal-highlight-ring));
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius-full);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px var(--modal-highlight-ring);
+    cursor: pointer;
+    transition: transform 0.3s var(--ease-out-smooth), box-shadow 0.3s var(--ease-out-smooth);
+}
+
+.evolution-view-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--modal-highlight-ring);
+}
+
+.evolution-view-btn:disabled {
+    background: linear-gradient(135deg, rgba(148, 163, 184, 0.35), rgba(100, 116, 139, 0.4));
+    color: var(--text-light);
+    cursor: default;
+    box-shadow: none;
+    transform: none;
+}
+
+.evolution-arrow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xs);
+    min-width: 96px;
+    align-self: stretch;
+}
+
+.evolution-arrow-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    width: clamp(90px, 16vw, 150px);
+}
+
+.evolution-arrow-line {
+    flex: 1;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent 0%, var(--modal-highlight-ring) 50%, transparent 100%);
+    box-shadow: inset 0 0 6px var(--modal-highlight-ring);
+}
+
+.evolution-arrow-line--left {
+    background: linear-gradient(90deg, transparent 0%, var(--modal-highlight) 80%, var(--modal-highlight) 100%);
+}
+
+.evolution-arrow-line--right {
+    background: linear-gradient(90deg, var(--modal-highlight) 0%, var(--modal-highlight) 20%, transparent 100%);
+}
+
+.evolution-arrow-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--modal-highlight), var(--modal-highlight-ring));
+    color: #fff;
+    box-shadow: 0 4px 12px var(--modal-highlight-ring);
+    font-size: 1.1rem;
+}
+
+.evolution-arrow-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xxs);
+}
+
+.evolution-detail-badge {
+    padding: 4px var(--spacing-sm);
+    background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+    color: #fff;
+    border-radius: var(--border-radius-full);
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(196, 181, 253, 0.25);
+}
+
+@media (max-width: 1024px) {
+    .evolution-chain {
+        gap: var(--spacing-sm);
+    }
+
+    .evolution-item {
+        max-width: 190px;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .evolution-arrow {
+        min-width: 96px;
+    }
+
+    .evolution-arrow-connector {
+        width: clamp(110px, 24vw, 180px);
+    }
+}
+
+@media (max-width: 768px) {
+    .pokedex-evolution-container {
+        -webkit-overflow-scrolling: touch;
+        gap: var(--spacing-sm);
+    }
+
+    .evolution-chain {
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm) 0;
+    }
+
+    .evolution-item {
+        max-width: 180px;
+    }
+
+    .evolution-arrow-line--left,
+    .evolution-arrow-line--right {
+        background: linear-gradient(90deg, transparent 0%, var(--modal-highlight-ring) 50%, transparent 100%);
+    }
+}
+
+@media (max-width: 600px) {
+    .pokedex-evolution-header {
+        align-items: center;
+        text-align: center;
+    }
+
+    .pokedex-evolution-container {
+        overflow-x: hidden;
+        align-items: stretch;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm) 0 var(--spacing-md);
+    }
+
+    .evolution-chain {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+
+    .evolution-item {
+        width: calc(100% - var(--spacing-lg));
+        max-width: 280px;
+        padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-sm);
+        gap: var(--spacing-xs);
+        margin: 0 auto;
+    }
+
+    .evolution-pokemon {
+        gap: var(--spacing-xs);
+    }
+
+    .evolution-image-container {
+        width: 78px;
+        height: 78px;
+    }
+
+    .evolution-arrow {
+        min-width: 0;
+        width: 100%;
+        gap: var(--spacing-xxs);
+        align-self: center;
+    }
+
+    .evolution-arrow-connector {
+        width: 100%;
+        gap: var(--spacing-sm);
+    }
+
+    .evolution-arrow-line {
+        max-width: 120px;
+        height: 2px;
+    }
+
+    .evolution-arrow-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.95rem;
+        transform: rotate(90deg);
+    }
+
+    .evolution-name {
+        font-size: 1rem;
+    }
+
+    .evolution-id {
+        font-size: 0.8rem;
+    }
+
+    .evolution-view-btn {
+        font-size: 0.72rem;
+        padding: var(--spacing-xxs) var(--spacing-sm);
+        min-height: 30px;
+        margin-top: var(--spacing-xs);
+    }
+}

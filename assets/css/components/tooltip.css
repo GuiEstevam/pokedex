@@ -1,0 +1,184 @@
+/* Sistema de Tooltips */
+.tooltip-wrapper {
+    width: 100%;
+}
+
+.tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* No modo lista, garantir que o tooltip-wrapper ocupe toda a largura */
+.pokemons-container.view-mode-list .tooltip-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    display: block !important;
+}
+
+.tooltip {
+    position: absolute;
+    z-index: 1000;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--glass-bg-solid);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg), 0 0 20px var(--primary-glow);
+    color: var(--text-dark);
+    font-size: 0.875rem;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-5px) scale(0.95);
+    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: hidden;
+}
+
+.tooltip-wrapper:hover .tooltip,
+.tooltip-wrapper:focus .tooltip {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+}
+
+/* Posicionamento do tooltip */
+.tooltip--top {
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(-5px) scale(0.95);
+}
+
+.tooltip-wrapper:hover .tooltip--top,
+.tooltip-wrapper:focus .tooltip--top {
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.tooltip--bottom {
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(5px) scale(0.95);
+}
+
+.tooltip-wrapper:hover .tooltip--bottom,
+.tooltip-wrapper:focus .tooltip--bottom {
+    transform: translateX(-50%) translateY(0) scale(1);
+}
+
+.tooltip--left {
+    right: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%) translateX(5px) scale(0.95);
+}
+
+.tooltip-wrapper:hover .tooltip--left,
+.tooltip-wrapper:focus .tooltip--left {
+    transform: translateY(-50%) translateX(0) scale(1);
+}
+
+.tooltip--right {
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%) translateX(-5px) scale(0.95);
+}
+
+.tooltip-wrapper:hover .tooltip--right,
+.tooltip-wrapper:focus .tooltip--right {
+    transform: translateY(-50%) translateX(0) scale(1);
+}
+
+/* Seta do tooltip */
+.tooltip::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+}
+
+.tooltip--top::before {
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: var(--glass-border);
+}
+
+.tooltip--bottom::before {
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-color: var(--glass-border);
+}
+
+.tooltip--left::before {
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left-color: var(--glass-border);
+}
+
+.tooltip--right::before {
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-right-color: var(--glass-border);
+}
+
+/* Tooltip multilinha */
+.tooltip--multiline {
+    white-space: normal;
+    max-width: 250px;
+    text-align: left;
+}
+
+/* Tooltip com informações de tipo */
+.tooltip-type-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    min-width: 200px;
+}
+
+.tooltip-type-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-xs);
+}
+
+.tooltip-type-weaknesses,
+.tooltip-type-resistances {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.8rem;
+}
+
+.tooltip-type-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+.tooltip-type-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.tooltip-type-badge {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+}
+

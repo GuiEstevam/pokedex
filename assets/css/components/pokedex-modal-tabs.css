@@ -1,0 +1,257 @@
+/**
+ * Estilos para sistema de abas do modal da Pokedex
+ */
+
+.pokedex-tabs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+    max-height: 100%;
+}
+
+/* Cabeçalho das Abas */
+.pokedex-tabs-header {
+    display: flex;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-bottom: 2px solid var(--border-color);
+    background: linear-gradient(180deg, 
+        var(--glass-bg) 0%, 
+        var(--background-card) 100%
+    );
+    flex-shrink: 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    position: relative;
+    z-index: 3;
+}
+
+.pokedex-tabs-header::-webkit-scrollbar {
+    height: 4px;
+}
+
+.pokedex-tabs-header::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.pokedex-tabs-header::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 2px;
+}
+
+.pokedex-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: var(--border-radius-md);
+    transition: all 0.3s var(--ease-out-smooth);
+    white-space: nowrap;
+    position: relative;
+    min-height: 44px;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+.pokedex-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--modal-highlight-ring) 50%, 
+        transparent 100%
+    );
+    transition: left 0.5s ease;
+}
+
+.pokedex-tab:hover::before {
+    left: 100%;
+}
+
+.pokedex-tab ion-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s var(--ease-out-smooth);
+}
+
+.pokedex-tab:hover ion-icon {
+    transform: scale(1.1);
+}
+
+.pokedex-tab:hover {
+    background: var(--background-hover);
+    color: var(--modal-highlight);
+    transform: translateY(-2px);
+}
+
+.pokedex-tab.active {
+    color: var(--modal-highlight);
+    background: linear-gradient(135deg, 
+        var(--modal-highlight-ring) 0%, 
+        transparent 100%
+    );
+    font-weight: 700;
+    box-shadow: 0 2px 8px var(--modal-highlight-ring);
+}
+
+.pokedex-tab.active ion-icon {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 6px var(--modal-highlight-ring));
+}
+
+.pokedex-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--modal-highlight) 50%, 
+        transparent 100%
+    );
+    border-radius: 2px 2px 0 0;
+    animation: tabIndicatorSlide 0.3s var(--ease-out-smooth);
+}
+
+@keyframes tabIndicatorSlide {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 60%;
+        opacity: 1;
+    }
+}
+
+/* Conteúdo das Abas */
+.pokedex-tabs-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.pokedex-tab-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    animation: tabFadeIn 0.3s var(--ease-out-smooth);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.pokedex-tab-panel .pokedex-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-lg);
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+@keyframes tabFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Melhorias visuais para transição entre abas */
+.pokedex-tab-panel {
+    animation: tabFadeIn 0.4s var(--ease-out-smooth);
+}
+
+/* Estados de Loading e Empty */
+.pokedex-loading,
+.pokedex-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    gap: var(--spacing-md);
+    min-height: 200px;
+    color: var(--text-secondary);
+}
+
+.pokedex-loading .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.pokedex-empty ion-icon {
+    font-size: 3rem;
+    opacity: 0.5;
+}
+
+.pokedex-empty p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Responsivo Mobile */
+@media (max-width: 768px) {
+    .pokedex-tabs-header {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        gap: var(--spacing-xs);
+    }
+
+    .pokedex-tab {
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-size: 0.85rem;
+        min-height: 44px;
+    }
+
+    .pokedex-tab ion-icon {
+        font-size: 1.1rem;
+    }
+
+    .pokedex-tab span {
+        display: none;
+    }
+
+    .pokedex-tab.active::after {
+        width: 80%;
+    }
+}
+

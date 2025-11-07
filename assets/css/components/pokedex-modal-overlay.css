@@ -1,0 +1,100 @@
+/* Modal Overlay - Backdrop e Animações */
+
+.pokedex-modal-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    background: var(--overlay-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999 !important;
+    padding: var(--spacing-md);
+    animation: overlayFadeIn 0.5s var(--ease-out-smooth);
+    will-change: opacity, backdrop-filter;
+    contain: layout style paint;
+    /* Garantir que o overlay escape de qualquer container */
+    transform: translateZ(0);
+}
+
+@keyframes overlayFadeIn {
+    0% {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
+    100% {
+        opacity: 1;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+}
+
+[data-theme="dark"] .pokedex-modal-overlay {
+    background: var(--overlay-bg);
+}
+
+/* Transições Vue - Mais Suaves */
+.modal-enter-active,
+.modal-leave-active {
+    transition: opacity var(--transition-opacity);
+}
+
+.modal-enter-from,
+.modal-leave-to {
+    opacity: 0;
+}
+
+.modal-enter-active .pokedex-modal,
+.modal-leave-active .pokedex-modal {
+    transition: transform 0.4s var(--ease-out-smooth), 
+                opacity 0.4s var(--ease-out-smooth),
+                scale 0.4s var(--ease-out-smooth);
+}
+
+.modal-enter-from .pokedex-modal,
+.modal-leave-to .pokedex-modal {
+    opacity: 0;
+    transform: scale(0.92) translateY(30px);
+}
+
+.modal-enter-to .pokedex-modal,
+.modal-leave-from .pokedex-modal {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* Responsivo Mobile */
+@media (max-width: 768px) {
+    .pokedex-modal-overlay {
+        padding: 0;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+    .pokedex-modal-overlay {
+        padding: 0;
+    }
+}
+
+/* Respeitar preferência de reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+    .pokedex-modal-overlay {
+        animation: none;
+        will-change: auto;
+    }
+    
+    .modal-enter-active .pokedex-modal,
+    .modal-leave-active .pokedex-modal {
+        transition: none;
+    }
+}
+

@@ -1,0 +1,561 @@
+/* Seções Internas do Modal - Dimensões, Stats, Habilidades */
+
+/* Seções - Design Tecnológico */
+.pokedex-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--glass-bg-solid);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    border-radius: 12px;
+    border: 2px solid var(--glass-border);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: visible;
+    transition: all var(--transition-smooth);
+    contain: none;
+    min-height: fit-content;
+}
+
+.pokedex-section:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--modal-highlight);
+    transform: translateY(-2px);
+}
+
+/* Efeito de brilho sutil nas seções */
+.pokedex-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(135deg, var(--modal-highlight) 0%, transparent 100%);
+    opacity: 0.35;
+}
+
+.pokedex-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 2px solid var(--modal-highlight);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.pokedex-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(135deg, var(--modal-highlight) 0%, transparent 100%);
+    border-radius: 2px;
+}
+
+/* Informações Básicas - Melhoradas */
+.pokedex-basic-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.basic-info-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: linear-gradient(135deg, var(--glass-bg) 0%, var(--glass-bg-solid) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: visible;
+    min-height: fit-content;
+}
+
+.basic-info-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, var(--modal-highlight) 0%, transparent 100%);
+    transform: scaleY(0);
+    transition: transform var(--transition-smooth);
+}
+
+.basic-info-item:hover::before {
+    transform: scaleY(1);
+}
+
+.basic-info-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(135deg, var(--glass-bg-solid) 0%, var(--glass-bg) 100%);
+    border-color: var(--modal-highlight);
+}
+
+.basic-info-icon {
+    font-size: 1.4rem;
+    color: var(--modal-highlight);
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 6px var(--modal-highlight-ring));
+}
+
+.basic-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.basic-info-label {
+    font-size: 0.65rem;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.basic-info-value {
+    font-size: 1rem;
+    font-weight: 800;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--modal-highlight);
+    line-height: 1.2;
+}
+
+/* Estatísticas - Melhoradas */
+.pokedex-stats {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: var(--spacing-sm);
+    width: 100%;
+}
+
+.pokedex-stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: linear-gradient(135deg, var(--glass-bg) 0%, var(--glass-bg-solid) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: visible;
+    animation: statFadeIn 0.5s var(--ease-out-smooth) backwards;
+    animation-delay: calc(var(--stat-index, 0) * 0.05s + 0.3s);
+    contain: none;
+    min-height: fit-content;
+    min-width: 0;
+    flex: 1 1 0;
+}
+
+@keyframes statFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.pokedex-stat::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(135deg, var(--modal-highlight) 0%, transparent 100%);
+    transform: scaleY(0);
+    transition: transform var(--transition-smooth);
+}
+
+.pokedex-stat:hover::before {
+    transform: scaleY(1);
+}
+
+.pokedex-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--modal-highlight);
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.pokedex-stat-name {
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pokedex-stat-value {
+    font-size: 1rem;
+    font-weight: 900;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--modal-highlight);
+    animation: statCountUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    line-height: 1.2;
+}
+
+@keyframes statCountUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.stat-bar-container {
+    width: 100%;
+    height: 12px;
+    min-height: 12px;
+    max-height: 12px;
+    background: var(--background-color);
+    border-radius: var(--border-radius-full);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    animation: statBarAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+}
+
+@keyframes statBarAppear {
+    from {
+        opacity: 0;
+        transform: scaleX(0);
+        transform-origin: left;
+    }
+    to {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+
+.stat-bar-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.stat-bar {
+    height: 100%;
+    min-height: 12px;
+    max-height: 12px;
+    border-radius: var(--border-radius-full);
+    transition: width var(--transition-smooth);
+    background: var(--modal-highlight);
+    box-shadow: 0 2px 8px var(--modal-highlight-ring), var(--glow-soft);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+[data-theme="dark"] .stat-bar {
+    background: var(--modal-highlight);
+    box-shadow: 0 2px 8px var(--modal-highlight-ring), var(--glow-soft);
+}
+
+/* Habilidades - Melhoradas */
+.pokedex-abilities {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.ability-item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: linear-gradient(135deg, var(--glass-bg) 0%, var(--glass-bg-solid) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-smooth);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: visible;
+    min-height: fit-content;
+}
+
+.ability-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    flex: 1;
+}
+
+.ability-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.ability-description {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin: 0;
+    font-style: italic;
+}
+
+.ability-item::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--modal-highlight-ring) 0%, transparent 70%);
+    transform: scale(0);
+    transition: transform var(--transition-smooth);
+}
+
+.ability-item:hover::after {
+    transform: scale(1);
+}
+
+.ability-item:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--glass-bg-solid) 0%, var(--glass-bg) 100%);
+    border-color: var(--modal-highlight);
+}
+
+.ability-icon {
+    font-size: 1.5rem;
+    color: var(--modal-highlight);
+    flex-shrink: 0;
+    margin-top: 2px;
+    filter: drop-shadow(0 2px 6px var(--modal-highlight-ring));
+}
+
+.ability-name {
+    font-size: 0.85rem;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+}
+
+.ability-hidden {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-top: var(--spacing-xs);
+    padding: 2px 8px;
+    background: var(--focus-ring);
+    border-radius: 4px;
+}
+
+/* Responsivo */
+@media (max-width: 1400px) {
+    .pokedex-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .pokedex-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .pokedex-section {
+        padding: var(--spacing-sm);
+        gap: var(--spacing-xs);
+    }
+    
+    .pokedex-section-title {
+        font-size: 0.75rem;
+        margin-bottom: var(--spacing-xs);
+        padding-bottom: var(--spacing-xs);
+    }
+    
+    .pokedex-basic-info {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-xs);
+    }
+    
+    .basic-info-item {
+        padding: var(--spacing-xs);
+        gap: var(--spacing-xs);
+    }
+    
+    .basic-info-icon {
+        font-size: 1.2rem;
+    }
+    
+    .basic-info-label {
+        font-size: 0.6rem;
+    }
+    
+    .basic-info-value {
+        font-size: 0.85rem;
+    }
+    
+    .pokedex-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-xs);
+    }
+    
+    .pokedex-stat {
+        padding: var(--spacing-xs);
+    }
+    
+    .pokedex-stat-name {
+        font-size: 0.6rem;
+    }
+    
+    .pokedex-stat-value {
+        font-size: 0.9rem;
+    }
+    
+    .stat-bar-container {
+        height: 10px;
+        min-height: 10px;
+        max-height: 10px;
+    }
+    
+    .pokedex-abilities {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-xs);
+    }
+    
+    .ability-item {
+        padding: var(--spacing-xs);
+    }
+    
+    .ability-icon {
+        font-size: 1.2rem;
+    }
+    
+    .ability-name {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .pokedex-basic-info {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+    }
+    
+    .basic-info-item {
+        flex-direction: row;
+        text-align: left;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .pokedex-stats {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+    }
+    
+    .pokedex-abilities {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Respeitar preferência de reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+    .pokedex-stat {
+        animation: none;
+    }
+    
+    .pokedex-stat-value {
+        animation: none;
+    }
+    
+    .stat-bar-container {
+        animation: none;
+    }
+    
+    .stat-bar-container::after,
+    .stat-bar::after {
+        animation: none;
+    }
+}
+

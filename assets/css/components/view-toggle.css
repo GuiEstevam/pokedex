@@ -1,0 +1,103 @@
+/* View Toggle Button - Alternar entre Grid e Lista */
+
+.view-toggle-btn {
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    border: 2px solid var(--glass-border);
+    border-radius: 12px;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    transition: background var(--transition-fast),
+                border-color var(--transition-fast),
+                color var(--transition-fast),
+                transform var(--transition-fast),
+                box-shadow var(--transition-fast);
+    box-shadow: var(--glass-shadow);
+    outline: none;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+    isolation: isolate;
+}
+
+.view-toggle-btn ion-icon {
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.view-toggle-btn:hover {
+    border-color: var(--primary-color);
+    background: var(--glass-bg-solid);
+    color: var(--text-dark);
+    transform: translateY(-1px) scale(1.005);
+    box-shadow: var(--shadow-md), 0 0 0 2px rgba(125, 211, 252, 0.1);
+}
+
+/* Ripple effect removido - estava causando problemas visuais */
+
+[data-theme="dark"] .view-toggle-btn:hover {
+    background: var(--glass-bg-solid);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-lg), 0 0 0 3px rgba(196, 181, 253, 0.15);
+}
+
+.view-toggle-btn:active {
+    transform: translateY(0) scale(0.95);
+    transition: transform 0.12s var(--ease-in-out-smooth);
+}
+
+.view-toggle-btn.view-toggle-btn--disabled,
+.view-toggle-btn[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: var(--glass-shadow);
+    transform: none;
+}
+
+.view-toggle-btn--density {
+    position: relative;
+}
+
+.view-toggle-btn--active:active {
+    transform: translateY(0) scale(0.92);
+}
+
+/* Estado ativo para botões toggle */
+.view-toggle-btn--active {
+    border-color: var(--primary-color);
+    background: var(--glass-bg-solid);
+    box-shadow: var(--shadow-md), 0 0 0 2px rgba(125, 211, 252, 0.1);
+    color: var(--primary-color);
+    transition: background var(--transition-fast),
+                border-color var(--transition-fast),
+                color var(--transition-fast),
+                transform var(--transition-fast),
+                box-shadow var(--transition-fast);
+}
+
+.view-toggle-btn--active:hover {
+    box-shadow: var(--shadow-md), 0 0 0 2px rgba(125, 211, 252, 0.15);
+    transform: translateY(-1px) scale(1.005);
+}
+
+[data-theme="dark"] .view-toggle-btn--active {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md), 0 0 0 2px rgba(196, 181, 253, 0.1);
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] .view-toggle-btn--active:hover {
+    box-shadow: var(--shadow-lg), 0 0 0 3px rgba(196, 181, 253, 0.15);
+}
+

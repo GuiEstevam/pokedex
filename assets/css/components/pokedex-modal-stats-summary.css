@@ -1,0 +1,156 @@
+/* Resumo de Estatísticas - Total, Melhor e Pior */
+
+.pokedex-stats-summary {
+    background: linear-gradient(135deg, var(--glass-bg) 0%, var(--glass-bg-solid) 100%);
+    border: 2px solid var(--modal-highlight);
+    box-shadow: var(--shadow-lg);
+}
+
+.stats-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.stat-summary-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--glass-bg-solid);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid var(--glass-border);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-summary-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--modal-highlight) 0%, transparent 100%);
+    transform: scaleX(0);
+    transition: transform var(--transition-smooth);
+}
+
+.stat-summary-item:hover::before {
+    transform: scaleX(1);
+}
+
+.stat-summary-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--modal-highlight);
+}
+
+.stat-summary-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 6px var(--modal-highlight-ring));
+}
+
+.stat-summary-total .stat-summary-icon {
+    color: var(--modal-highlight);
+}
+
+.stat-summary-best .stat-summary-icon {
+    color: var(--success-color);
+}
+
+.stat-summary-worst .stat-summary-icon {
+    color: var(--warning-color);
+}
+
+.stat-summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    flex: 1;
+    min-width: 0;
+}
+
+.stat-summary-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-summary-value {
+    font-size: 1.4rem;
+    font-weight: 900;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--modal-highlight);
+    line-height: 1;
+}
+
+.stat-summary-best .stat-summary-value {
+    color: var(--success-color);
+}
+
+.stat-summary-worst .stat-summary-value {
+    color: var(--warning-color);
+}
+
+.stat-summary-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text-muted);
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .stats-summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-xs);
+    }
+    
+    .stat-summary-item {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        gap: var(--spacing-xs);
+    }
+    
+    .stat-summary-icon {
+        font-size: 1.4rem;
+    }
+    
+    .stat-summary-value {
+        font-size: 1.1rem;
+    }
+    
+    .stat-summary-label {
+        font-size: 0.65rem;
+    }
+    
+    .stat-summary-name {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-summary-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+    }
+    
+    .stat-summary-value {
+        font-size: 1rem;
+    }
+    
+    .stat-summary-icon {
+        font-size: 1.2rem;
+    }
+}
+

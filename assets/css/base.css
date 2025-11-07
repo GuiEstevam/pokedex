@@ -1,0 +1,140 @@
+* {
+ margin: 0;
+ padding: 0;
+ border: 0;
+ box-sizing: border-box;
+}
+
+html {
+ width: 100%;
+ min-height: 100vh;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+  'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+ background-color: var(--background-color);
+ background-image: var(--gradient-neutral-soft);
+ background-attachment: fixed;
+ transition: background var(--transition-smooth);
+ position: relative;
+}
+
+html::before {
+ content: '';
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: radial-gradient(
+   circle at 12% 30%,
+   var(--accent-muted) 0%,
+   transparent 55%
+  ),
+  radial-gradient(circle at 82% 78%, var(--secondary-glow) 0%, transparent 60%),
+  radial-gradient(circle at 45% 15%, var(--focus-ring) 0%, transparent 58%);
+ pointer-events: none;
+ z-index: 0;
+ opacity: 0.85;
+}
+
+[data-theme='dark'] html {
+ background-color: var(--background-color);
+ background-image: var(--gradient-neutral-strong);
+}
+
+[data-theme='dark'] html::before {
+ background: radial-gradient(
+   circle at 15% 28%,
+   var(--accent-muted) 0%,
+   transparent 60%
+  ),
+  radial-gradient(circle at 82% 82%, var(--secondary-glow) 0%, transparent 58%),
+  radial-gradient(circle at 48% 12%, var(--focus-ring) 0%, transparent 60%);
+ opacity: 0.6;
+}
+
+body {
+ color: var(--text-dark);
+ line-height: 1.6;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ min-height: 100vh;
+ transition: color var(--transition-color),
+  background-color var(--transition-color);
+}
+
+/* Transições suaves para elementos interativos */
+button,
+a,
+input,
+select,
+.pokemon-card,
+.pokedex-modal,
+.search-input,
+.search-type-select,
+.view-toggle-btn {
+ transition: background-color var(--transition-color),
+  border-color var(--transition-color), color var(--transition-color),
+  box-shadow var(--transition-shadow);
+}
+
+/* Skip Links para Acessibilidade */
+.skip-link {
+ position: fixed;
+ top: -100px;
+ left: 0;
+ background: var(--primary-color);
+ color: white;
+ padding: var(--spacing-md) var(--spacing-lg);
+ text-decoration: none;
+ z-index: 10000;
+ border-radius: 0 0 var(--border-radius-md) 0;
+ font-weight: 600;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-size: 1rem;
+ transition: top var(--transition-fast);
+ clip: rect(0, 0, 0, 0);
+ clip-path: inset(50%);
+ overflow: hidden;
+}
+
+.skip-link:focus {
+ top: 0;
+ left: 0;
+ clip: auto;
+ clip-path: none;
+ outline: 3px solid white;
+ outline-offset: 2px;
+}
+
+/* Melhorar foco visível em todos os elementos interativos */
+*:focus-visible {
+ outline: 2px solid var(--primary-color);
+ outline-offset: 2px;
+ border-radius: var(--border-radius-sm);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+ outline: 2px solid var(--primary-color);
+ outline-offset: 2px;
+}
+
+/* Remover outline padrão e usar focus-visible */
+*:focus:not(:focus-visible) {
+ outline: none;
+}
+
+#app {
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ min-height: 100vh;
+ margin: 0 auto;
+ position: relative;
+ /* Permitir que modais com position: fixed escapem do container */
+ isolation: isolate;
+}

@@ -1,0 +1,1693 @@
+.search-section {
+ width: 100%;
+ margin: 0 0 var(--spacing-lg) 0;
+ padding: 0;
+}
+
+.search-container {
+ background: var(--glass-bg);
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ border: 1px solid var(--glass-border);
+ border-radius: 20px;
+ padding: var(--spacing-lg);
+ box-shadow: var(--shadow-md);
+ display: flex;
+ flex-direction: column;
+ max-width: 100%;
+ margin: 0;
+ transition: all var(--transition-smooth);
+ position: relative;
+ box-sizing: border-box;
+ overflow: visible;
+}
+
+/* Indicador sutil quando há filtros ativos */
+.search-container--filters-active {
+ border-color: var(--outline-color);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+}
+
+[data-theme='dark'] .search-container--filters-active {
+ border-color: var(--outline-color);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+}
+
+/* Header da Seção de Busca */
+.search-header {
+ display: flex;
+ flex-direction: column;
+ align-items: stretch;
+ gap: var(--spacing-sm);
+ margin-bottom: var(--spacing-md);
+}
+
+.search-header-left {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-xs);
+}
+
+.search-meta {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-xs);
+ align-items: flex-start;
+}
+
+.search-meta .clear-all-btn {
+ align-self: flex-start;
+}
+
+.search-title {
+ font-size: 1.3rem;
+ font-weight: 700;
+ color: var(--text-dark);
+ margin: 0;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ letter-spacing: 0.02em;
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-xs);
+}
+
+.search-badge {
+ align-self: flex-end;
+ display: inline-flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ padding: var(--spacing-xs) var(--spacing-sm);
+ border-radius: var(--border-radius-full);
+ background: var(--glass-bg-solid);
+ border: 1px solid var(--glass-border);
+ font-size: 0.75rem;
+ font-weight: 600;
+ color: var(--text-muted);
+}
+
+.search-header-right {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-xs);
+ align-items: flex-start;
+}
+
+.search-title-icon {
+ font-size: 1.3rem;
+ color: var(--primary-color);
+ flex-shrink: 0;
+}
+
+.search-subtitle {
+ font-size: 0.9rem;
+ color: var(--text-muted);
+ margin: 0;
+ font-weight: 400;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ padding: 0;
+}
+
+[data-theme='dark'] .search-title {
+ color: var(--text-light);
+}
+
+[data-theme='dark'] .search-subtitle {
+ color: var(--text-muted);
+}
+
+/* Seção de Controles Principais - Reestruturada */
+.main-controls-section {
+ width: 100%;
+ margin-bottom: var(--spacing-md);
+ padding: 0;
+ box-sizing: border-box;
+}
+
+.main-controls-grid {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-md);
+ align-items: stretch;
+ width: 100%;
+ min-width: 0;
+ box-sizing: border-box;
+ position: relative;
+}
+
+.main-control-group {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-xs);
+ width: 100%;
+ min-width: 0;
+ max-width: 100%;
+ align-items: stretch;
+ box-sizing: border-box;
+ position: relative;
+ z-index: 1;
+ isolation: isolate;
+}
+
+/* Alinhamento consistente dos labels */
+.main-control-group .main-control-label {
+ height: 1.5rem;
+ min-height: 1.5rem;
+ max-height: 1.5rem;
+ display: flex;
+ align-items: center;
+ line-height: 1.5rem;
+ flex-shrink: 0;
+}
+
+.main-control-label {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ font-size: 0.75rem;
+ font-weight: 600;
+ color: var(--text-muted);
+ text-transform: uppercase;
+ letter-spacing: 0.05em;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ margin-bottom: 0;
+ width: 100%;
+}
+
+.main-control-icon {
+ font-size: 0.9rem;
+ color: var(--primary-color);
+ flex-shrink: 0;
+}
+
+.main-control-inputs {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-sm);
+ align-items: stretch;
+ width: 100%;
+ min-width: 0;
+ margin-top: 0;
+ box-sizing: border-box;
+ position: relative;
+ z-index: 10;
+}
+
+/* Garantir que selects e botões tenham a mesma altura e alinhamento */
+.main-control-group .main-control-inputs .search-sort-select,
+.main-control-group .main-control-inputs .view-toggle-btn-compact {
+ height: 2.75rem;
+ box-sizing: border-box;
+ margin-top: 0;
+ align-self: flex-start;
+}
+
+/* Grupo: Pesquisa e Região (Combinado) */
+.main-control-group--combined .main-control-inputs {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-sm);
+ align-items: stretch;
+ width: 100%;
+ min-width: 0;
+ box-sizing: border-box;
+ position: relative;
+}
+
+.main-control-group--combined .main-control-inputs .search-input {
+ flex: 1;
+ min-width: 0;
+ max-width: 100%;
+ width: 100%;
+ height: 2.75rem;
+ box-sizing: border-box;
+ margin-top: 0;
+ align-self: stretch;
+}
+
+.main-control-subgroup {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-xs);
+ flex: 1;
+ min-width: 0;
+ max-width: none;
+ width: 100%;
+ align-items: stretch;
+ justify-content: flex-start;
+}
+
+.main-control-label--inline {
+ margin-bottom: 0;
+ height: 1.5rem;
+ min-height: 1.5rem;
+ max-height: 1.5rem;
+ line-height: 1.5rem;
+ flex-shrink: 0;
+}
+
+.main-control-subgroup .search-region-select {
+ width: 100%;
+ height: 2.75rem;
+ box-sizing: border-box;
+ margin-top: 0;
+}
+
+/* Estrutura do grupo combinado:
+   - Label "Pesquisa" no topo (altura fixa: 1.5rem)
+   - main-control-inputs contém:
+     - search-input
+     - main-control-subgroup com label inline + select */
+.main-control-group--combined .main-control-inputs {
+ /* Os elementos dentro devem estar alinhados pelo topo do container de inputs */
+ align-items: flex-start;
+}
+
+/* Grupo: Ordenação - alinhar inputs com o grupo combinado */
+.main-control-group:nth-child(2) .main-control-inputs {
+ width: 100%;
+ margin-top: 0;
+ flex-direction: row;
+ align-items: stretch;
+ gap: var(--spacing-sm);
+}
+
+.main-control-group:nth-child(2) .main-control-inputs .search-sort-select {
+ flex: 1;
+ min-width: 0;
+ max-width: none;
+}
+
+/* Grupo: Visualização - alinhar inputs com o grupo combinado */
+.main-control-group:nth-child(3) .main-control-inputs {
+ gap: var(--spacing-sm);
+ width: 100%;
+ margin-top: 0;
+ flex-direction: row;
+ justify-content: flex-start;
+ flex-wrap: wrap;
+}
+
+.main-control-group:nth-child(3) .view-toggle-btn-compact {
+ flex: 0 0 auto;
+}
+
+@media (min-width: 1280px) {
+ .main-control-group:nth-child(3) .main-control-inputs {
+  flex-direction: row;
+ }
+}
+
+[data-theme='dark'] .main-control-label {
+ color: var(--text-muted);
+}
+
+/* Botões compactos com labels */
+.view-toggle-btn-compact {
+ min-width: 2.75rem;
+ width: 2.75rem;
+ height: 2.75rem;
+ padding: 0;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ position: relative;
+ box-sizing: border-box;
+ flex-shrink: 0;
+ z-index: 10;
+ isolation: isolate;
+}
+
+/* Tooltip para botões compactos */
+.view-toggle-btn-compact[title]:hover::after {
+ content: attr(title);
+ position: absolute;
+ bottom: calc(100% + 8px);
+ left: 50%;
+ transform: translateX(-50%);
+ background: var(--text-dark);
+ color: #ffffff;
+ padding: var(--spacing-xs) var(--spacing-sm);
+ border-radius: var(--border-radius-md);
+ font-size: 0.75rem;
+ white-space: nowrap;
+ z-index: 10000;
+ pointer-events: none;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ box-shadow: var(--shadow-lg);
+}
+
+.view-toggle-btn-compact[title]:hover::before {
+ content: '';
+ position: absolute;
+ bottom: calc(100% + 2px);
+ left: 50%;
+ transform: translateX(-50%);
+ border: 5px solid transparent;
+ border-top-color: var(--text-dark);
+ z-index: 10001;
+ pointer-events: none;
+}
+
+[data-theme='dark'] .view-toggle-btn-compact[title]:hover::after {
+ background: var(--text-light);
+ color: var(--text-dark);
+}
+
+[data-theme='dark'] .view-toggle-btn-compact[title]:hover::before {
+ border-top-color: var(--text-light);
+}
+
+/* Labels antigos (mantidos para compatibilidade com outras seções) */
+.control-group-label {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ font-size: 0.75rem;
+ font-weight: 600;
+ color: var(--text-muted);
+ text-transform: uppercase;
+ letter-spacing: 0.05em;
+ margin-bottom: calc(var(--spacing-xs) * -1);
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+}
+
+.control-group-icon {
+ font-size: 0.9rem;
+ color: var(--primary-color);
+}
+
+.control-group-text {
+ color: var(--text-muted);
+}
+
+[data-theme='dark'] .control-group-text {
+ color: var(--text-muted);
+}
+
+.search-row {
+ display: flex;
+ width: 100%;
+ justify-content: flex-start;
+ align-items: center;
+ gap: var(--spacing-sm);
+ flex-wrap: wrap;
+}
+
+.search-row-primary {
+ flex-wrap: nowrap;
+}
+
+.search-row-primary > * {
+ flex: 1 1 auto;
+ min-width: 0;
+}
+
+/* Estilos base para inputs (aplicados dentro dos grupos principais) */
+.main-control-group .search-input {
+ min-width: 0;
+ width: 100%;
+}
+
+.main-control-group .search-region-select {
+ min-width: 0;
+ width: 100%;
+}
+
+.main-control-group .search-sort-select {
+ min-width: 0;
+ width: 100%;
+}
+
+/* Botões de toggle não devem crescer */
+.search-row-primary .view-toggle-btn {
+ flex: 0 0 auto;
+ min-width: 2.75rem;
+ max-width: 2.75rem;
+}
+
+@media (max-width: 768px) {
+ .main-controls-grid {
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+ }
+
+ .main-control-inputs {
+  width: 100%;
+ }
+
+ .main-control-group--combined .main-control-inputs {
+  flex-direction: column;
+  align-items: stretch;
+ }
+
+ .main-control-subgroup {
+  max-width: 100%;
+ }
+
+ .main-control-group:nth-child(2) .main-control-inputs {
+  flex-direction: row;
+ }
+
+ .main-control-group .search-input,
+ .main-control-group .search-region-select,
+ .main-control-group .search-sort-select {
+  width: 100%;
+ }
+}
+
+.search-input-wrapper {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-sm);
+ background: var(--glass-bg);
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ border: 2px solid var(--glass-border);
+ border-radius: 14px;
+ box-shadow: var(--glass-shadow);
+ height: 2.75rem;
+ padding: 0 var(--spacing-md) 0 var(--spacing-md);
+ transition: all var(--transition-smooth);
+ width: 100%;
+ box-sizing: border-box;
+}
+
+.search-input-wrapper:focus-within {
+ border-color: var(--primary-color);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring-strong);
+ background: var(--glass-bg-solid);
+}
+
+.search-input-icon {
+ font-size: 1.2rem;
+ color: var(--primary-color);
+ opacity: 0.7;
+ transition: opacity var(--transition-fast);
+}
+
+.search-input-wrapper:focus-within .search-input-icon {
+ opacity: 1;
+}
+
+.search-input {
+ flex: 1;
+ background: transparent;
+ border: none;
+ height: 100%;
+ font-size: 0.95rem;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-weight: 400;
+ color: var(--text-dark);
+ padding: 0;
+ outline: none;
+ min-width: 0;
+}
+
+/* Override para inputs dentro dos grupos principais */
+.main-control-group .search-input {
+ min-width: 0;
+ max-width: none;
+}
+
+/* Estado ativo para input de busca */
+.search-input.search-control--active {
+ background: transparent;
+}
+
+.search-input.search-control--active:focus {
+ box-shadow: none;
+}
+
+[data-theme='dark'] .search-input:focus {
+ box-shadow: none;
+}
+
+.search-input::placeholder {
+ color: var(--text-muted);
+ opacity: 0.7;
+}
+
+.search-input:focus::placeholder {
+ opacity: 0.5;
+}
+
+.search-input-shortcut {
+ font-size: 0.75rem;
+ font-weight: 600;
+ color: var(--text-muted);
+ background: rgba(148, 163, 184, 0.15);
+ border-radius: var(--border-radius-full);
+ padding: var(--spacing-xs) var(--spacing-sm);
+ white-space: nowrap;
+}
+
+.search-input-hint {
+ font-size: 0.75rem;
+ color: var(--text-muted);
+ margin: var(--spacing-xs) 0 0 0;
+}
+
+[data-theme='dark'] .search-input-wrapper {
+ background: rgba(30, 41, 59, 0.65);
+ border-color: rgba(148, 163, 184, 0.3);
+}
+
+[data-theme='dark'] .search-input-wrapper:focus-within {
+ background: rgba(30, 41, 59, 0.85);
+ border-color: var(--primary-color);
+}
+
+[data-theme='dark'] .search-input-shortcut {
+ background: rgba(148, 163, 184, 0.25);
+ color: var(--text-light);
+}
+
+.search-sort-select {
+ background-color: var(--glass-bg);
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right var(--spacing-md) center;
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ font-size: 0.95rem;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-weight: 500;
+ height: 2.75rem;
+ padding: 0 var(--spacing-lg) 0 var(--spacing-lg);
+ border: 2px solid var(--glass-border);
+ border-radius: 12px;
+ box-shadow: var(--glass-shadow);
+ cursor: pointer;
+ transition: all var(--transition-smooth);
+ outline: none;
+ color: var(--text-dark);
+ will-change: transform, box-shadow, border-color;
+ appearance: none;
+ padding-right: calc(var(--spacing-lg) * 2.5);
+}
+
+/* Override para selects dentro dos grupos principais */
+.main-control-group .search-sort-select,
+.main-control-group .search-region-select {
+ min-width: 0;
+ max-width: none;
+}
+
+.search-sort-select:hover {
+ border-color: var(--primary-color);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+ background-color: var(--glass-bg-solid);
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right var(--spacing-md) center;
+ transform: translateY(-1px) scale(1.005);
+}
+
+.search-sort-select:focus {
+ border-color: var(--primary-color);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring-strong);
+ background-color: var(--glass-bg-solid);
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 3L11 8H1z'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right var(--spacing-md) center;
+ transform: translateY(-1px) scale(1.005);
+ outline: none;
+}
+
+/* Estado ativo para select de ordenação */
+.search-sort-select.search-control--active {
+ border-color: var(--primary-color);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+ background-color: var(--glass-bg-solid);
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right var(--spacing-md) center;
+}
+
+.search-sort-select.search-control--active:focus {
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring-strong);
+}
+
+[data-theme='dark'] .search-sort-select:hover,
+[data-theme='dark'] .search-sort-select:focus {
+ border-color: var(--primary-color);
+ box-shadow: var(--shadow-lg), 0 0 0 3px var(--focus-ring-strong);
+}
+
+[data-theme='dark'] .search-sort-select.search-control--active {
+ border-color: var(--primary-color);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+}
+
+.search-sort-select option {
+ background: var(--background-card);
+ color: var(--text-dark);
+}
+
+.search-region-select {
+ background-color: var(--glass-bg);
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right var(--spacing-md) center;
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ font-size: 0.95rem;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-weight: 500;
+ height: 2.75rem;
+ padding: 0 var(--spacing-lg) 0 var(--spacing-lg);
+ border: 2px solid var(--glass-border);
+ border-radius: 12px;
+ box-shadow: var(--glass-shadow);
+ cursor: pointer;
+ transition: all var(--transition-smooth);
+ outline: none;
+ color: var(--text-dark);
+ will-change: transform, box-shadow, border-color;
+ appearance: none;
+ padding-right: calc(var(--spacing-lg) * 2.5);
+}
+
+.search-region-select:hover {
+ border-color: var(--primary-color);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+ background-color: var(--glass-bg-solid);
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right var(--spacing-md) center;
+ transform: translateY(-1px) scale(1.005);
+}
+
+.search-region-select:focus {
+ border-color: var(--primary-color);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring-strong);
+ transform: translateY(-1px) scale(1.005);
+ background-color: var(--glass-bg-solid);
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 3L11 8H1z'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right var(--spacing-md) center;
+ outline: none;
+}
+
+.search-region-select option {
+ background: var(--background-card);
+ color: var(--text-dark);
+}
+
+.search-region-select option:disabled {
+ opacity: 0.5;
+ font-style: italic;
+}
+
+@media (max-width: 600px) {
+ .search-sort-select {
+  width: 100%;
+  max-width: none;
+ }
+}
+
+/* Seção de Filtros Ativos */
+.filters-active-section {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-md);
+ animation: fadeIn 0.3s var(--ease-out-smooth);
+}
+
+.filters-badges-container {
+ display: flex;
+ align-items: flex-start;
+ gap: var(--spacing-md);
+ flex-wrap: wrap;
+}
+
+.filters-badges {
+ display: flex;
+ flex-wrap: wrap;
+ gap: var(--spacing-sm);
+ flex: 1;
+ min-width: 0;
+}
+
+/* Badge de Filtro */
+.filter-badge {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ padding: var(--spacing-xs) var(--spacing-sm);
+ background: var(--glass-bg);
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ border: 2px solid var(--primary-color);
+ border-radius: var(--border-radius-full);
+ box-shadow: var(--glass-shadow);
+ cursor: pointer;
+ transition: all var(--transition-smooth);
+ outline: none;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-size: 0.85rem;
+ font-weight: 500;
+ color: var(--text-dark);
+ position: relative;
+ will-change: transform, box-shadow;
+ animation: badgeSlideIn 0.3s var(--ease-out-smooth);
+ opacity: 0;
+ transform: translateX(-10px) scale(0.95);
+ animation-fill-mode: forwards;
+}
+
+@keyframes badgeSlideIn {
+ from {
+  opacity: 0;
+  transform: translateX(-10px) scale(0.95);
+ }
+ to {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+ }
+}
+
+@keyframes badgeSlideOut {
+ from {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+ }
+ to {
+  opacity: 0;
+  transform: translateX(-10px) scale(0.95);
+ }
+}
+
+.filter-badge:hover {
+ transform: translateY(-2px) scale(1.02);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+ background: var(--glass-bg-solid);
+}
+
+.filter-badge:active {
+ transform: translateY(0) scale(0.98);
+ animation: badgePulse 0.3s ease-out;
+}
+
+@keyframes badgePulse {
+ 0%,
+ 100% {
+  transform: scale(1);
+ }
+ 50% {
+  transform: scale(0.95);
+ }
+}
+
+.filter-badge-label {
+ white-space: nowrap;
+ max-width: 200px;
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+
+.filter-badge-remove {
+ font-size: 1.1rem;
+ color: var(--primary-color);
+ flex-shrink: 0;
+ transition: transform var(--transition-fast);
+}
+
+.filter-badge:hover .filter-badge-remove {
+ transform: scale(1.2);
+}
+
+[data-theme='dark'] .filter-badge {
+ color: var(--text-light);
+ border-color: var(--primary-color);
+}
+
+[data-theme='dark'] .filter-badge:hover {
+ box-shadow: var(--shadow-lg), 0 0 0 3px var(--focus-ring-strong);
+}
+
+/* Botão Limpar Tudo */
+.clear-all-btn {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ padding: var(--spacing-xs) var(--spacing-md);
+ background: var(--glass-bg);
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ border: 2px solid var(--glass-border);
+ border-radius: var(--border-radius-lg);
+ box-shadow: var(--glass-shadow);
+ cursor: pointer;
+ transition: all var(--transition-smooth);
+ outline: none;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-size: 0.85rem;
+ font-weight: 600;
+ color: var(--text-dark);
+ white-space: nowrap;
+ will-change: transform, box-shadow, border-color;
+ flex-shrink: 0;
+}
+
+.clear-all-btn:hover {
+ transform: translateY(-2px);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+ border-color: var(--primary-color);
+ background: var(--glass-bg-solid);
+}
+
+.clear-all-btn:active {
+ transform: translateY(0);
+}
+
+.clear-all-btn ion-icon {
+ font-size: 1rem;
+ color: var(--primary-color);
+}
+
+/* Contador de filtros no botão */
+.clear-all-count {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ min-width: 20px;
+ height: 20px;
+ padding: 0 var(--spacing-xs);
+ background: var(--primary-color);
+ color: #ffffff;
+ border-radius: var(--border-radius-full);
+ font-size: 0.75rem;
+ font-weight: 700;
+ margin-left: var(--spacing-xs);
+ animation: countPopIn 0.3s var(--ease-out-smooth);
+}
+
+@keyframes countPopIn {
+ from {
+  transform: scale(0);
+  opacity: 0;
+ }
+ to {
+  transform: scale(1);
+  opacity: 1;
+ }
+}
+
+/* Animação de shake quando não há filtros (será aplicada via classe) */
+.clear-all-btn.shake {
+ animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+ 0%,
+ 100% {
+  transform: translateX(0);
+ }
+ 10%,
+ 30%,
+ 50%,
+ 70%,
+ 90% {
+  transform: translateX(-5px);
+ }
+ 20%,
+ 40%,
+ 60%,
+ 80% {
+  transform: translateX(5px);
+ }
+}
+
+[data-theme='dark'] .clear-all-btn {
+ color: var(--text-light);
+}
+
+[data-theme='dark'] .clear-all-btn:hover {
+ border-color: var(--primary-color);
+ box-shadow: var(--shadow-lg), 0 0 0 3px var(--focus-ring-strong);
+}
+
+.result-counter {
+ font-size: 0.9rem;
+ color: var(--text-muted);
+ padding: var(--spacing-xs) var(--spacing-md);
+ background: var(--glass-bg-solid);
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ border-radius: var(--border-radius-md);
+ text-align: center;
+ font-weight: 500;
+ box-shadow: var(--shadow-sm);
+ border: 1px solid var(--glass-border);
+ white-space: nowrap;
+ animation: fadeIn 0.3s var(--ease-out-smooth);
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+}
+
+@keyframes fadeIn {
+ from {
+  opacity: 0;
+  transform: translateY(-5px);
+ }
+ to {
+  opacity: 1;
+  transform: translateY(0);
+ }
+}
+
+/* Seção de Tipos de Pokémon */
+.pokemon-types-section {
+ margin-top: var(--spacing-lg);
+ padding-top: var(--spacing-md);
+ border-top: 1px solid var(--glass-border);
+}
+
+.pokemon-types-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ gap: var(--spacing-md);
+ margin-bottom: var(--spacing-md);
+ flex-wrap: wrap;
+ padding: 0;
+}
+
+.pokemon-types-filter-badges {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ flex-wrap: wrap;
+ flex-shrink: 0;
+}
+
+.pokemon-type-filter-badge {
+ flex-shrink: 0;
+}
+
+/* Removido - agora usa control-group-text que já tem suporte ao tema dark */
+
+.pokemon-types-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+ gap: var(--spacing-sm);
+ width: 100%;
+ overflow: visible;
+ padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
+ margin-bottom: var(--spacing-md);
+ position: relative;
+}
+
+/* Indicador de loading quando filtros estão sendo aplicados */
+.pokemon-types-grid--loading::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background: rgba(255, 255, 255, 0.5);
+ backdrop-filter: blur(2px);
+ -webkit-backdrop-filter: blur(2px);
+ border-radius: var(--border-radius-lg);
+ z-index: 1;
+ animation: loadingOverlay 1.5s ease-in-out infinite;
+ pointer-events: none;
+}
+
+[data-theme='dark'] .pokemon-types-grid--loading::before {
+ background: rgba(0, 0, 0, 0.3);
+}
+
+@keyframes loadingOverlay {
+ 0%,
+ 100% {
+  opacity: 0.3;
+ }
+ 50% {
+  opacity: 0.6;
+ }
+}
+
+/* Sempre mostrar todos os tipos em grid responsivo */
+.pokemon-types-grid {
+ grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+}
+
+.pokemon-type-badge {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ padding: var(--spacing-sm) var(--spacing-md);
+ background: var(--glass-bg);
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ border: 2px solid var(--glass-border);
+ border-radius: var(--border-radius-lg);
+ box-shadow: var(--glass-shadow);
+ cursor: pointer;
+ transition: all var(--transition-smooth);
+ outline: none;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-size: 0.85rem;
+ font-weight: 500;
+ color: var(--text-dark);
+ text-align: left;
+ position: relative;
+ overflow: hidden;
+}
+
+.pokemon-type-badge:hover:not(.pokemon-type-badge--active) {
+ transform: translateY(-2px);
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+ border-color: var(--primary-color);
+}
+
+.pokemon-type-badge:focus:not(.pokemon-type-badge--active) {
+ outline: 2px solid var(--primary-color);
+ outline-offset: 2px;
+}
+
+.pokemon-type-badge:focus.pokemon-type-badge--active {
+ outline: none;
+}
+
+/* Cores específicas por tipo */
+.pokemon-type-badge[data-type='bug'] {
+ --type-color: var(--bug-type);
+}
+
+.pokemon-type-badge[data-type='dark'] {
+ --type-color: var(--dark-type);
+}
+
+.pokemon-type-badge[data-type='dragon'] {
+ --type-color: var(--dragon-type);
+}
+
+.pokemon-type-badge[data-type='electric'] {
+ --type-color: var(--electric-type);
+}
+
+.pokemon-type-badge[data-type='fairy'] {
+ --type-color: var(--fairy-type);
+}
+
+.pokemon-type-badge[data-type='fighting'] {
+ --type-color: var(--fighting-type);
+}
+
+.pokemon-type-badge[data-type='fire'] {
+ --type-color: var(--fire-type);
+}
+
+.pokemon-type-badge[data-type='flying'] {
+ --type-color: var(--flying-type);
+}
+
+.pokemon-type-badge[data-type='ghost'] {
+ --type-color: var(--ghost-type);
+}
+
+.pokemon-type-badge[data-type='grass'] {
+ --type-color: var(--grass-type);
+}
+
+.pokemon-type-badge[data-type='ground'] {
+ --type-color: var(--ground-type);
+}
+
+.pokemon-type-badge[data-type='ice'] {
+ --type-color: var(--ice-type);
+}
+
+.pokemon-type-badge[data-type='normal'] {
+ --type-color: var(--normal-type);
+}
+
+.pokemon-type-badge[data-type='poison'] {
+ --type-color: var(--poison-type);
+}
+
+.pokemon-type-badge[data-type='psychic'] {
+ --type-color: var(--psychic-type);
+}
+
+.pokemon-type-badge[data-type='rock'] {
+ --type-color: var(--rock-type);
+}
+
+.pokemon-type-badge[data-type='steel'] {
+ --type-color: var(--steel-type);
+}
+
+.pokemon-type-badge[data-type='water'] {
+ --type-color: var(--water-type);
+}
+
+/* Hover apenas quando não está ativo */
+.pokemon-type-badge:not(.pokemon-type-badge--active):hover {
+ transform: translateY(-2px);
+ border-color: var(--type-color, var(--primary-color));
+ box-shadow: var(--shadow-md), 0 0 0 2px var(--focus-ring);
+}
+
+/* Estado ativo - sempre visível quando selecionado */
+.pokemon-type-badge--active {
+ border-color: var(--type-color, var(--primary-color));
+ box-shadow: var(--shadow-lg), 0 0 0 2px var(--focus-ring-strong);
+ background: var(--glass-bg-solid);
+ outline: none !important;
+}
+
+.pokemon-type-badge--active:hover {
+ transform: translateY(-2px);
+ box-shadow: var(--shadow-lg), 0 0 0 2px var(--focus-ring-strong);
+}
+
+/* Remover outline quando não está ativo e perdeu o foco */
+.pokemon-type-badge:not(.pokemon-type-badge--active) {
+ outline: none;
+}
+
+/* Estado active (durante clique) apenas quando não está selecionado */
+.pokemon-type-badge:not(.pokemon-type-badge--active):active {
+ transform: scale(0.98);
+}
+
+.pokemon-type-badge-icon {
+ width: 20px;
+ height: 20px;
+ border-radius: 50%;
+ background: var(--type-color, var(--primary-color));
+ flex-shrink: 0;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 0.7rem;
+ color: #ffffff;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ position: relative;
+}
+
+.pokemon-type-badge-icon::before {
+ content: '';
+ position: absolute;
+ width: 8px;
+ height: 8px;
+ border-radius: 50%;
+ background: rgba(255, 255, 255, 0.3);
+ top: 2px;
+ left: 2px;
+}
+
+.pokemon-type-badge-label {
+ flex: 1;
+ min-width: 0;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+
+/* Contador de tipos no badge */
+.pokemon-type-count-badge {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ min-width: 20px;
+ height: 20px;
+ padding: 0 6px;
+ background: rgba(255, 255, 255, 0.9);
+ color: var(--text-dark);
+ border-radius: var(--border-radius-full);
+ font-size: 0.7rem;
+ font-weight: 700;
+ margin-left: auto;
+ flex-shrink: 0;
+ animation: countBadgePopIn 0.3s var(--ease-out-smooth);
+ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+ transition: all var(--transition-fast);
+}
+
+.pokemon-type-badge--active .pokemon-type-count-badge {
+ background: var(--type-color, var(--primary-color));
+ color: #ffffff;
+ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-type-count-badge--zero {
+ background: rgba(255, 0, 0, 0.2);
+ color: var(--text-muted);
+}
+
+@keyframes countBadgePopIn {
+ from {
+  transform: scale(0);
+  opacity: 0;
+ }
+ to {
+  transform: scale(1);
+  opacity: 1;
+ }
+}
+
+/* Estado quando não há resultados */
+.pokemon-type-badge--no-results {
+ opacity: 0.6;
+ /* Permite clique - tipos com count 0 ainda podem ser selecionados para acionar carregamento */
+ cursor: pointer;
+}
+
+.pokemon-type-badge--no-results .pokemon-type-badge-label {
+ text-decoration: line-through;
+}
+
+/* Hover em tipos sem resultados ainda funciona para indicar que pode ser clicado */
+.pokemon-type-badge--no-results:hover {
+ opacity: 0.8;
+ transform: translateY(-2px);
+}
+
+.pokemon-type-badge--no-results:active {
+ opacity: 1;
+}
+
+/* Removido .pokemon-type-badge--disabled pois não é mais usado */
+
+[data-theme='dark'] .pokemon-type-count-badge {
+ background: rgba(255, 255, 255, 0.15);
+ color: var(--text-light);
+}
+
+[data-theme='dark'] .pokemon-type-badge--active .pokemon-type-count-badge {
+ background: var(--type-color, var(--primary-color));
+ color: #ffffff;
+}
+
+/* Container do Botão Mostrar Mais */
+.pokemon-types-load-more-container {
+ width: 100%;
+ margin-top: var(--spacing-md);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+/* Botão Mostrar Mais */
+.pokemon-types-load-more-btn {
+ width: 100%;
+ max-width: 400px;
+ padding: var(--spacing-md) var(--spacing-lg);
+ background: var(--glass-bg);
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ border: 2px solid var(--glass-border);
+ border-radius: var(--border-radius-lg);
+ box-shadow: var(--glass-shadow);
+ cursor: pointer;
+ transition: all var(--transition-smooth);
+ outline: none;
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-size: 0.95rem;
+ font-weight: 600;
+ color: var(--text-dark);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: var(--spacing-sm);
+ position: relative;
+ will-change: transform, box-shadow, border-color;
+}
+
+.pokemon-types-load-more-btn:hover {
+ transform: translateY(-2px);
+ box-shadow: var(--shadow-md), 0 0 0 2px rgba(125, 211, 252, 0.1);
+ border-color: var(--primary-color);
+ background: var(--glass-bg-solid);
+}
+
+.pokemon-types-load-more-btn:focus {
+ outline: 2px solid var(--primary-color);
+ outline-offset: 2px;
+}
+
+.pokemon-types-load-more-btn:active {
+ transform: translateY(0);
+}
+
+.pokemon-types-load-more-icon {
+ font-size: 1.2rem;
+ transition: transform var(--transition-smooth);
+}
+
+.pokemon-types-load-more-btn:hover .pokemon-types-load-more-icon {
+ transform: translateY(2px);
+}
+
+.pokemon-types-load-more-text {
+ color: var(--text-dark);
+}
+
+[data-theme='dark'] .pokemon-types-load-more-btn {
+ color: var(--text-light);
+}
+
+[data-theme='dark'] .pokemon-types-load-more-text {
+ color: var(--text-light);
+}
+
+/* Estado de Loading */
+.pokemon-types-loading-state {
+ width: 100%;
+ max-width: 400px;
+ padding: var(--spacing-md) var(--spacing-lg);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: var(--spacing-sm);
+}
+
+.pokemon-types-loading-spinner {
+ width: 20px;
+ height: 20px;
+ border: 3px solid var(--glass-border);
+ border-top-color: var(--primary-color);
+ border-radius: 50%;
+ animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+ to {
+  transform: rotate(360deg);
+ }
+}
+
+.pokemon-types-loading-text {
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-size: 0.9rem;
+ color: var(--text-muted);
+}
+
+[data-theme='dark'] .pokemon-types-loading-text {
+ color: var(--text-muted);
+}
+
+/* Transição suave no grid ao expandir (já aplicada na regra principal) */
+
+@media (max-width: 600px) {
+ .search-section {
+  flex-direction: column;
+  gap: var(--spacing-sm);
+ }
+
+ .search-header {
+  flex-direction: column;
+  align-items: stretch;
+ }
+
+ .search-header-right {
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+ }
+
+ .result-counter {
+  width: 100%;
+  text-align: center;
+ }
+
+ .clear-all-btn {
+  width: 100%;
+  justify-content: center;
+ }
+
+ .pokemon-types-header {
+  flex-direction: column;
+  align-items: flex-start;
+ }
+
+ .pokemon-type-filter-badge {
+  width: 100%;
+ }
+
+ .search-input {
+  width: 100%;
+  max-width: none;
+ }
+
+ .pokemon-types-grid {
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--spacing-xs);
+ }
+
+ .pokemon-type-badge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: 0.75rem;
+ }
+
+ .pokemon-type-badge-icon {
+  width: 16px;
+  height: 16px;
+  font-size: 0.6rem;
+ }
+
+ .pokemon-types-toggle-btn {
+  font-size: 0.85rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+ }
+
+ /* Responsivo para badges e botão limpar */
+ .filters-badges-container {
+  flex-direction: column;
+  align-items: stretch;
+ }
+
+ .filters-badges {
+  width: 100%;
+ }
+
+ .clear-all-btn {
+  width: 100%;
+  justify-content: center;
+ }
+
+ .filter-badge-label {
+  max-width: 150px;
+ }
+}
+
+/* Filtros Avançados (container principal) */
+.advanced-filters-section {
+ margin-top: 0;
+ padding-top: var(--spacing-md);
+ border-top: 2px solid var(--glass-border);
+}
+
+.advanced-filters-header {
+ cursor: pointer;
+ user-select: none;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ gap: var(--spacing-md);
+ padding: var(--spacing-xs) 0;
+ transition: all var(--transition-fast);
+ margin-bottom: var(--spacing-sm);
+}
+
+.advanced-filters-header:hover {
+ opacity: 0.8;
+}
+
+.advanced-filters-content {
+ overflow: hidden;
+ max-height: 3000px;
+ opacity: 1;
+ transition: max-height var(--transition-smooth),
+  opacity var(--transition-smooth);
+}
+
+.advanced-filters-content--collapsed {
+ max-height: 0;
+ opacity: 0;
+ overflow: hidden;
+}
+
+/* Filtros por Estatísticas */
+.stats-filters-section {
+ margin-top: var(--spacing-md);
+ padding-top: var(--spacing-md);
+ border-top: 1px solid var(--glass-border);
+}
+
+.stats-filters-header {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ margin-bottom: var(--spacing-sm);
+ padding: 0;
+ cursor: default;
+}
+
+.control-group-label-content {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+}
+
+.collapse-icon {
+ font-size: 1.2rem;
+ color: var(--text-muted);
+ transition: transform var(--transition-smooth);
+ flex-shrink: 0;
+}
+
+[data-theme='dark'] .collapse-icon {
+ color: var(--text-light);
+ opacity: 0.7;
+}
+
+[data-theme='dark'] .stats-filters-header:hover,
+[data-theme='dark'] .pokemon-types-header:hover {
+ opacity: 0.9;
+}
+
+.stats-filters-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+ gap: var(--spacing-md);
+ margin-top: var(--spacing-sm);
+}
+
+.stats-filter-group {
+ display: flex;
+ flex-direction: column;
+ gap: var(--spacing-xs);
+}
+
+.stats-filter-label {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ font-size: 0.85rem;
+ font-weight: 600;
+ color: var(--text-dark);
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+}
+
+.stats-filter-icon {
+ font-size: 1rem;
+ color: var(--primary-color);
+}
+
+.stats-filter-inputs {
+ display: flex;
+ align-items: center;
+ gap: var(--spacing-xs);
+ width: 100%;
+ min-width: 0;
+ box-sizing: border-box;
+}
+
+.stats-filter-input {
+ flex: 1;
+ min-width: 0;
+ max-width: 100%;
+ padding: var(--spacing-sm) var(--spacing-md);
+ background: var(--glass-bg);
+ backdrop-filter: var(--backdrop-blur);
+ -webkit-backdrop-filter: var(--backdrop-blur);
+ border: 2px solid var(--glass-border);
+ border-radius: var(--border-radius-md);
+ font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  sans-serif;
+ font-size: 0.9rem;
+ color: var(--text-dark);
+ transition: all var(--transition-smooth);
+ outline: none;
+ box-sizing: border-box;
+}
+
+.stats-filter-input:focus {
+ border-color: var(--primary-color);
+ box-shadow: 0 0 0 2px var(--focus-ring-strong);
+}
+
+.stats-filter-input::placeholder {
+ color: var(--text-muted);
+}
+
+.stats-filter-separator {
+ color: var(--text-muted);
+ font-weight: 600;
+ padding: 0 var(--spacing-xs);
+ flex-shrink: 0;
+ white-space: nowrap;
+}
+
+[data-theme='dark'] .stats-filter-label {
+ color: var(--text-light);
+}
+
+[data-theme='dark'] .stats-filter-input {
+ background: var(--glass-bg);
+ color: var(--text-light);
+ border-color: var(--glass-border);
+}
+
+[data-theme='dark'] .stats-filter-input:focus {
+ border-color: var(--primary-color);
+ box-shadow: 0 0 0 2px var(--focus-ring-strong);
+}
+
+/* Responsivo para filtros de estatísticas */
+@media (max-width: 768px) {
+ .stats-filters-grid {
+  grid-template-columns: 1fr;
+  gap: var(--spacing-sm);
+ }
+
+ .stats-filter-group {
+  width: 100%;
+  min-width: 0;
+ }
+
+ .stats-filter-inputs {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+ }
+
+ .stats-filter-input {
+  min-width: 0;
+  flex: 1 1 0;
+  max-width: calc(50% - calc(var(--spacing-xs) / 2));
+  font-size: 0.85rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  box-sizing: border-box;
+ }
+
+ .stats-filter-separator {
+  padding: 0 calc(var(--spacing-xs) / 2);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+ }
+}
