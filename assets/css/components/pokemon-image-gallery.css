@@ -53,7 +53,7 @@
     display: flex;
     gap: var(--spacing-xs);
     margin-top: var(--spacing-md);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     max-width: 100%;
     width: 100%;
