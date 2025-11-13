@@ -1,0 +1,16 @@
+# Documentação interna (exceto README.md)
+*.md
+!README.md
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+

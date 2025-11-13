@@ -60,7 +60,6 @@
     padding: var(--spacing-xs) 0;
     z-index: 3;
     position: relative;
-    /* Remover scroll horizontal - mostrar todas as miniaturas */
     overflow-x: visible;
     overflow-y: visible;
 }

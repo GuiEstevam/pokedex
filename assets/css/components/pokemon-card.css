@@ -147,11 +147,7 @@
   gridFadeIn 0.5s var(--ease-out-smooth);
 }
 
-/* Estilos de tamanho e densidade removidos - mantendo apenas visualização padrão */
-
-/* ============================================
-   CARD PRINCIPAL - DESIGN MINIMALISTA MODERNO
-   ============================================ */
+/* Card Principal */
 
 .pokemon-card {
  display: flex;
@@ -270,7 +266,6 @@
  overflow: hidden;
 }
 
-/* ID no footer - removido do topo para não sobrepor informações importantes */
 .pokemon-id {
  display: none;
 }
@@ -466,7 +461,6 @@
  transform: translate(-50%, -50%) scale(0.92) rotateY(10deg);
 }
 
-/* Hover effect - apenas no modo grid - Cross-fade suave */
 .pokemons-container.view-mode-grid
  .pokemon-card:hover
  .pokemon-card-image-default {

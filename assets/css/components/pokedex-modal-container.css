@@ -23,10 +23,7 @@
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     contain: layout style paint;
     align-items: stretch;
-    /* Garantir que a navegação não quebre o layout */
 }
-
-/* Remover regra antiga - navegação agora está dentro de pokedex-info-section */
 
 /* Efeito de scan/animação tecnológica */
 .pokedex-modal::before {
@@ -110,7 +107,6 @@
     overflow: hidden;
 }
 
-/* Ripple effect melhorado para botão de fechar */
 .pokedex-close-btn::before {
     content: '';
     position: absolute;
@@ -150,7 +146,6 @@
     outline-offset: 2px;
 }
 
-/* Classes dinâmicas para tipos de Pokémon no modal - Reutilizando variáveis */
 .pokedex-modal[data-pokemon-type="bug"] {
     --pokemon-type-color: var(--bug-type);
     --pokemon-type-color-dark: var(--bug-type);

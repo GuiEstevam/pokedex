@@ -186,7 +186,6 @@
     }
 }
 
-/* Melhorias visuais para transição entre abas */
 .pokedex-tab-panel {
     animation: tabFadeIn 0.4s var(--ease-out-smooth);
 }

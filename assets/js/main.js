@@ -210,37 +210,26 @@
                 return this.pokemonList;
             }
             
-            // Determinar qual lista usar
-            // Se há filtros ativos, usar todos os Pokémon carregados (incluindo pré-carregados)
-            // Se não há filtros e a ordenação é padrão (ID crescente), usar apenas os carregados via scroll infinito
-            // Se não há filtros mas a ordenação não é padrão, usar todos os Pokémon carregados para ordenação correta
             let listToFilter = this.pokemonList;
             if (!this.isFiltering) {
-                // Verificar se a ordenação é padrão (ID crescente)
                 const isDefaultSort = this.sortBy === 'id' && this.sortAscending;
                 
                 if (isDefaultSort) {
-                    // Ordenação padrão: usar apenas os carregados via scroll infinito (lazy loading)
                     listToFilter = this.pokemonList.slice(0, this.scrollOffset);
                 } else {
-                    // Ordenação personalizada: usar todos os Pokémon carregados para ordenação correta
-                    // Isso garante que quando o usuário inverte a ordem, veja todos os Pokémon (ex: do 151 ao 1)
                     listToFilter = this.pokemonList;
                 }
             }
             
-            // Ordenar primeiro - sempre usar sortPokemonBy quando disponível para respeitar sortAscending
             let sortedList;
             if (window.sortPokemonBy) {
                 sortedList = window.sortPokemonBy([...listToFilter], this.sortBy, this.sortAscending);
             } else if (window.sortPokemonById) {
-                // Fallback: se sortPokemonBy não estiver disponível, usar sortPokemonById (sempre crescente)
                 sortedList = window.sortPokemonById([...listToFilter]);
             } else {
                 sortedList = listToFilter;
             }
             
-            // Filtrar por nome e tipo
             let filtered = window.filterPokemonList(
                 sortedList,
                 this.filter,
@@ -423,27 +412,14 @@
         
         /**
          * Tipos únicos disponíveis na lista atual com contagem
-         * IMPORTANTE: SEMPRE retorna todos os tipos possíveis (18 tipos)
-         * desde o início, independente de pokemonList estar vazio ou não.
-         * Isso garante que o usuário possa filtrar por qualquer tipo,
-         * mesmo que ainda não tenha carregado Pokémon com aquele tipo.
-         * Tipos sem Pokémon carregados terão count: 0 e aparecerão desabilitados.
          */
         availableTypes() {
-            // Obter todos os tipos possíveis (18 tipos)
-            // Esta função sempre retorna os 18 tipos, não depende de pokemonList
             const allPossibleTypes = window.getTranslatedTypesForSelect ? window.getTranslatedTypesForSelect() : [];
             
             if (!allPossibleTypes || allPossibleTypes.length === 0) {
-                // Fallback: se não houver função de tradução, retornar array vazio
-                // Mas isso não deve acontecer se type-translator.js foi carregado
                 return [];
             }
             
-            // SEMPRE retornar todos os 18 tipos possíveis
-            // Não depende de pokemonList estar preenchido
-            // A contagem (count) será baseada nos Pokémon carregados via typeCounts
-            // Tipos sem Pokémon terão count: 0 (já tratado em typeCounts)
             return allPossibleTypes.map(type => ({
                 value: type.value,
                 label: type.label,
@@ -453,50 +429,34 @@
         
         /**
          * Tipos visíveis (carregamento progressivo em batches)
-         * SEMPRE limita a quantidade visível baseado em typesVisibleCount
-         * Garante que tipos selecionados sempre apareçam, mesmo fora do batch atual
          */
         visibleTypes() {
             if (!this.availableTypes || this.availableTypes.length === 0) {
                 return [];
             }
             
-            // Obter tipos selecionados
             const selectedTypes = Array.isArray(this.filterType) ? this.filterType : [];
             
-            // Se não há tipos selecionados, SEMPRE retornar apenas os visíveis (limitado)
             if (selectedTypes.length === 0) {
-                // Limitar aos primeiros typesVisibleCount tipos
-                const limited = this.availableTypes.slice(0, this.typesVisibleCount);
-                return limited;
+                return this.availableTypes.slice(0, this.typesVisibleCount);
             }
             
-            // Com tipos selecionados: garantir que apareçam + alguns não selecionados
             const selectedTypeObjects = this.availableTypes.filter(type => 
                 selectedTypes.includes(type.value)
             );
             const selectedCount = selectedTypeObjects.length;
             
-            // Se typesVisibleCount já cobre todos os tipos, retornar todos
             if (this.typesVisibleCount >= this.availableTypes.length) {
                 return this.availableTypes;
             }
             
-            // Calcular quantos slots restam para tipos não selecionados
             const remainingSlots = Math.max(0, this.typesVisibleCount - selectedCount);
-            
-            // Obter tipos não selecionados
             const nonSelectedTypes = this.availableTypes.filter(type => 
                 !selectedTypes.includes(type.value)
             );
-            
-            // Pegar apenas os não selecionados até o limite de slots restantes
             const visibleNonSelected = nonSelectedTypes.slice(0, remainingSlots);
-            
-            // Combinar: tipos selecionados + não selecionados limitados
             const allVisibleTypes = [...selectedTypeObjects, ...visibleNonSelected];
             
-            // Ordenar para manter a ordem original de availableTypes
             return allVisibleTypes.sort((a, b) => {
                 const indexA = this.availableTypes.findIndex(t => t.value === a.value);
                 const indexB = this.availableTypes.findIndex(t => t.value === b.value);
@@ -506,29 +466,22 @@
         
         /**
          * Verifica se há mais tipos para mostrar
-         * Como todos os tipos (18) estão sempre disponíveis desde o início,
-         * o botão aparece sempre que há mais tipos disponíveis que visíveis.
-         * Funciona mesmo quando pokemonList está vazio na inicialização.
          */
         hasMoreTypes() {
-            // Obter availableTypes (sempre retorna 18 tipos)
             const availableTypesArray = this.availableTypes;
             
-            // Se não há tipos disponíveis (não deveria acontecer), não mostrar botão
             if (!availableTypesArray || availableTypesArray.length === 0) {
                 return false;
             }
             
-            const totalCount = availableTypesArray.length; // Sempre deve ser 18
+            const totalCount = availableTypesArray.length;
             const visibleTypesArray = this.visibleTypes;
             const visibleCount = visibleTypesArray ? visibleTypesArray.length : 0;
             
-            // Se typesVisibleCount já alcançou o total, não há mais para mostrar
             if (this.typesVisibleCount >= totalCount) {
                 return false;
             }
             
-            // Se há mais tipos disponíveis que visíveis, mostrar botão
             return visibleCount < totalCount;
         },
         
@@ -540,8 +493,7 @@
                 return false;
             }
             
-            const totalCount = this.availableTypes.length; // Sempre deve ser 18
-            // Se typesVisibleCount já alcançou ou ultrapassou o total, todos estão visíveis
+            const totalCount = this.availableTypes.length;
             return this.typesVisibleCount >= totalCount;
         },
         
@@ -1018,13 +970,9 @@
                 const apiService = new window.PokemonApiService();
                 const region = this.regions[this.selectedRegion];
                 
-                // Usar scrollOffset para calcular o próximo batch a carregar via scroll
-                // Isso garante que o scroll infinito não seja afetado pelo pré-carregamento
                 const regionOffset = region ? region.start - 1 : 0;
                 const actualOffset = regionOffset + this.scrollOffset;
                 
-                // Calcular limite do batch respeitando o limite da região
-                // Verificar baseado no scrollOffset, não no currentOffset
                 const remaining = this.totalPokemon - this.scrollOffset;
                 const batchLimit = Math.min(this.batchSize, remaining);
                 
@@ -1033,21 +981,16 @@
                     return;
                 }
                 
-                // Verificar se os Pokémon já foram pré-carregados
-                // Se sim, apenas atualizar scrollOffset sem fazer nova requisição
                 if (this.scrollOffset < this.currentOffset) {
-                    // Pokémon já estão na lista, apenas atualizar scrollOffset
                     const nextScrollOffset = Math.min(this.scrollOffset + batchLimit, this.currentOffset);
                     this.scrollOffset = nextScrollOffset;
                     
-                    // Verificar se ainda há mais para carregar
                     if (this.scrollOffset >= this.totalPokemon) {
                         this.hasMore = false;
                     }
                     
                     this.isLoadingMore = false;
                     
-                    // Atualizar observer após mudança no scrollOffset
                     this.$nextTick(() => {
                         this.updateScrollObserver();
                     });
@@ -1055,7 +998,6 @@
                     return;
                 }
                 
-                // Se não foram pré-carregados, fazer requisição
                 const newPokemon = await apiService.fetchPokemonBatch(
                     actualOffset,
                     batchLimit
@@ -1066,15 +1008,12 @@
                     return;
                 }
 
-                // Adicionar à lista existente
                 this.pokemonList = [...this.pokemonList, ...newPokemon];
                 this.currentOffset += newPokemon.length;
                 this.scrollOffset += newPokemon.length;
 
-                // Verificar se ainda há mais para carregar
                 if (this.scrollOffset >= this.totalPokemon || newPokemon.length < batchLimit) {
                     this.hasMore = false;
-                    // Se já carregou todos no primeiro batch, mostrar toast aqui
                     if (this.scrollOffset >= this.totalPokemon && window.errorHandler && !this.isFiltering) {
                         window.errorHandler.showSuccess(
                             'Carregamento completo',
@@ -1173,27 +1112,16 @@
                     return;
                 }
                 
-                // Adicionar à lista existente
-                // IMPORTANTE: Pré-carregamento só atualiza currentOffset, não scrollOffset
-                // scrollOffset só é atualizado via loadMorePokemon (scroll infinito)
                 this.pokemonList = [...this.pokemonList, ...newPokemon];
                 this.currentOffset += newPokemon.length;
                 
-                // Verificar se ainda há mais para carregar
                 if (this.currentOffset >= this.totalPokemon) {
                     this.isPreloading = false;
-                    // Não definir hasMore = false aqui - deixar scroll infinito controlar
-                    // Não mostrar toast aqui - o toast só deve aparecer quando scroll infinito termina
-                    // O pré-carregamento é silencioso em background
                     return;
                 }
                 
-                // Continuar pré-carregamento em background
-                // Se searchAccelerated é true, carregar mais rápido (para busca/filtros)
-                // Se searchAccelerated é false, carregar mais devagar (background suave)
-                const delay = this.searchAccelerated ? 200 : 800; // Delay maior quando em background suave
+                const delay = this.searchAccelerated ? 200 : 800;
                 
-                // Usar requestIdleCallback se disponível, senão setTimeout
                 if (window.requestIdleCallback) {
                     window.requestIdleCallback(() => {
                         this.preloadAllPokemon();
@@ -1204,8 +1132,6 @@
                     }, delay);
                 }
             } catch (error) {
-                // Em caso de erro, parar pré-carregamento silenciosamente
-                // (não mostrar erro para não incomodar usuário durante pré-carregamento)
                 this.isPreloading = false;
             }
         },
@@ -1371,29 +1297,21 @@
         
         /**
          * Carrega mais tipos em batches progressivos
-         * Incrementa typesVisibleCount em batches de typesBatchSize (6)
-         * até alcançar o total de tipos disponíveis (18)
          */
         loadMoreTypes() {
-            // Não fazer nada se já está carregando ou não há mais tipos
             if (this.isLoadingTypes || !this.hasMoreTypes) {
                 return;
             }
             
-            // Obter total de tipos disponíveis (sempre 18)
             const totalTypes = this.availableTypes ? this.availableTypes.length : 18;
             
-            // Se já mostramos todos os tipos, não há nada para carregar
             if (this.typesVisibleCount >= totalTypes) {
                 return;
             }
             
             this.isLoadingTypes = true;
             
-            // Simular um pequeno delay para animação suave
             setTimeout(() => {
-                // Incrementar tipos visíveis em batches
-                // Garantir que não ultrapasse o total de tipos disponíveis
                 this.typesVisibleCount = Math.min(
                     this.typesVisibleCount + this.typesBatchSize,
                     totalTypes
@@ -1415,12 +1333,8 @@
          * Colapsa tipos para quantidade inicial (usado pelo botão "Mostrar Menos")
          */
         collapseTypes() {
-            // Resetar para quantidade inicial, mas manter tipos selecionados visíveis
             const selectedTypes = Array.isArray(this.filterType) ? this.filterType : [];
             const selectedCount = selectedTypes.length;
-            
-            // Garantir que pelo menos os tipos selecionados estejam visíveis
-            // Mas se houver muitos tipos selecionados, mostrar pelo menos 9
             const minVisible = Math.max(9, selectedCount);
             this.typesVisibleCount = minVisible;
             this.isLoadingTypes = false;
